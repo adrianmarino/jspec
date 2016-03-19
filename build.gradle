@@ -6,6 +6,16 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
+task fatJar(type: Jar) {
+  manifest {
+    attributes 'Implementation-Title': 'JSpec jar',
+        'Implementation-Version': version
+  }
+  baseName = project.name + '-all'
+  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+  with jar
+}
+
 repositories {
     mavenCentral()
 }
@@ -13,5 +23,6 @@ repositories {
 dependencies {
   compile 'org.codehaus.groovy:groovy-all:2.4.1'
   compile 'commons-lang:commons-lang:2.6'
+	compile 'org.fusesource.jansi:jansi:1.11'
   testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }

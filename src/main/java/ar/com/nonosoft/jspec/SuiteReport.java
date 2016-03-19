@@ -1,15 +1,13 @@
 package ar.com.nonosoft.jspec;
 
+import static java.lang.String.valueOf;
+
 public class SuiteReport {
 
-	private long successful, failures, errors;
+	private long failures, errors;
 
 	public SuiteReport() {
-		successful = failures = errors = 0;
-	}
-
-	public void success() {
-		successful++;
+		failures = errors = 0;
 	}
 
 	public void fail() {
@@ -21,10 +19,12 @@ public class SuiteReport {
 	}
 
 	public String toString() {
-		return new StringBuilder("Totals: ")
-				.append(successful).append(" successful, ")
-				.append(failures).append(" failures, ")
-				.append(errors).append(" errors.")
-				.toString();
+		return new StringBuilder(valueOf(failures))
+				.append(" ")
+				.append( failures == 1  ? "failure" : "failures")
+				.append(", ")
+				.append(errors)
+				.append(errors == 1 ? "error" : " errors")
+				.append(".").toString();
 	}
 }
