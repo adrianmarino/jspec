@@ -10,13 +10,15 @@ import static org.fusesource.jansi.Ansi.Color.*;
 public class Description<T> extends SpecComponent<T> {
 
 	public Description(String description, NestedDescriptionBlock block) {
-		printHeader(description, false);
+		super(description);
+		printHeader(false);
 		block.eval();
 		printFooter(false);
 	}
 
 	public Description(String description, DescriptionBlock block) {
-		printHeader(description, true);
+		super(description);
+		printHeader(true);
 		block.eval(this);
 		printFooter(true);
 	}
@@ -26,8 +28,8 @@ public class Description<T> extends SpecComponent<T> {
 		if(root) output.newline().println(boldWithFbColor(report.toString(), BLUE));
 	}
 
-	private void printHeader(String description, boolean root) {
-		output.println(boldWithFbColor(description, root ? YELLOW : DEFAULT)).beginLevel();
+	private void printHeader(boolean root) {
+		output.println(boldWithFbColor(getDescription(), root ? YELLOW : DEFAULT)).beginLevel();
 	}
 
 	public void describe(String desc, NestedDescriptionBlock block) {

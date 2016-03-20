@@ -9,7 +9,8 @@ import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 public class Context<T> extends SpecComponent<T> {
 	public Context(String description, ContextBlock block) {
-		output.println(withFgColor(capitalize(description), DEFAULT)).beginLevel();
+		super(description);
+		output.println(withFgColor(capitalize(getDescription()), DEFAULT)).beginLevel();
 		block.eval(this);
 		output.endLevel();
 	}

@@ -3,6 +3,7 @@ package ar.com.nonosoft.jspec.structs;
 import ar.com.nonosoft.jspec.blocks.ContextBlock;
 import ar.com.nonosoft.jspec.blocks.ItBlock;
 import ar.com.nonosoft.jspec.blocks.SubjectBlock;
+import ar.com.nonosoft.jspec.exception.JSpecMissingSubjectException;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.SuiteReport;
 import ar.com.nonosoft.jspec.structs.impl.Context;
@@ -22,9 +23,15 @@ public abstract class SpecComponent<T> {
 
 	protected	static final Output output = new Output();
 
+	private String description;
+
 	private SubjectBlock<T> subjectBlock;
 
 	private T subject;
+
+	public SpecComponent(String description) {
+		this.description = description;
+	}
 
 	public void context(String description, ContextBlock<T> block) {
 		new Context<T>(description, block);
@@ -35,7 +42,12 @@ public abstract class SpecComponent<T> {
 	}
 
 	public T subject() {
-		return subject == null ? subject = subjectBlock.eval() : subject;
+		if(subjectBlock == null) throw new JSpecMissingSubjectException(this);
+
+		if(subject == null) {
+			subject = subjectBlock.eval();
+		}
+		return subject;
 	}
 
 	public void it(String desc, ItBlock spec) {
@@ -73,5 +85,9 @@ public abstract class SpecComponent<T> {
 
 	private void printMessage(String message, Color color) {
 		output.println(withFgColor(message, color));
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }

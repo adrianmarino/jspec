@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.structs;
+package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.blocks.DescriptionBlock;
 import ar.com.nonosoft.jspec.structs.impl.Description;
