@@ -1,12 +1,12 @@
-import ar.com.nonosoft.jspec.structs.JSpec;
-
 import java.util.Stack;
 
-import static org.hamcrest.CoreMatchers.*;
+import static ar.com.nonosoft.jspec.structs.JSpec.describe;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 
 public class StackSpec {
 	public static void main(String[] args) {
-		new JSpec<Stack>(Stack.class, d -> {
+		describe(Stack.class, d -> {
 			d.describe("#new", () -> {
 				d.context("when create an empty stack", c -> {
 					c.subject(() -> new Stack());
