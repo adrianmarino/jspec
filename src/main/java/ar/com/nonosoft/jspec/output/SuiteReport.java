@@ -26,6 +26,6 @@ public class SuiteReport {
 				.append(errors)
 				.append(" ")
 				.append(errors == 1 ? "error" : "errors")
-				.append("").toString();
+				.append(".").toString();
 	}
 }

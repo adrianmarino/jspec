@@ -1,11 +1,11 @@
 package ar.com.nonosoft.jspec.structs;
 
-import ar.com.nonosoft.jspec.blocks.ContextBlock;
+import ar.com.nonosoft.jspec.blocks.context.ContextBlock;
 import ar.com.nonosoft.jspec.blocks.ItBlock;
 import ar.com.nonosoft.jspec.blocks.LetBlock;
 import ar.com.nonosoft.jspec.blocks.SubjectBlock;
-import ar.com.nonosoft.jspec.exception.JSpecMissingLetException;
-import ar.com.nonosoft.jspec.exception.JSpecMissingSubjectException;
+import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
+import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.SuiteReport;
 import ar.com.nonosoft.jspec.structs.impl.Context;
@@ -21,51 +21,63 @@ import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.Color.RED;
 
-public abstract class SpecComponent<T> {
+public abstract class SpecComponent<THIS, SUBJECT> {
 
-	protected	static final SuiteReport report = new SuiteReport();
+	protected static final SuiteReport report = new SuiteReport();
 
-	protected	static final Output output = new Output();
+	protected static final Output output = new Output();
 
 	private String description;
 
-	private SubjectBlock<T> subjectBlock;
+	private SubjectBlock<SUBJECT> subjectBlock;
 
 	private Map<String, LetBlock> letBlocks;
 
-	private T subject;
+	private SUBJECT subject;
 
 	public SpecComponent(String description) {
 		this.description = description;
 	}
 
-	public void context(String description, ContextBlock<T> block) {
-		new Context<T>(description, block);
+	public void context(String description, ContextBlock<SUBJECT> block) {
+		new Context<SUBJECT>(description, block);
 	}
 
-	public void subject(SubjectBlock<T> block) {
+	public THIS subject(SubjectBlock<SUBJECT> block) {
 		subjectBlock = block;
+		return (THIS)this;
 	}
 
-	public T subject() {
-		if(subjectBlock == null) throw new JSpecMissingSubjectException(this);
+	public THIS subject(SUBJECT value) {
+		subjectBlock = () -> value;
+		return (THIS)this;
+	}
+
+	public SUBJECT subject() {
+		if (subjectBlock == null) throw new MissingSubjectException(getClass(), getDescription());
 		return subject == null ? subject = subjectBlock.eval() : subject;
 	}
 
-	public void let(String name, LetBlock block) {
+	public THIS let(String name, LetBlock block) {
 		letBlocks().put(name, block);
+		return (THIS)this;
 	}
 
-	public <T> T val(String name, Class<T> clazz) {
-		LetBlock block = letBlocks().get(name);
-		if(block == null) throw new JSpecMissingLetException(this);
-		return (T)block.eval();
+	public THIS let(String name, Object value) {
+		letBlocks().put(name, () -> value);
+		return (THIS)this;
 	}
 
-	public <T> T val(String name) {
+	public <T> T get(String name, Class<T> clazz) {
 		LetBlock block = letBlocks().get(name);
-		if(block == null) throw new JSpecMissingLetException(this);
-		return (T)block.eval();
+		if (block == null) throw new MissingLetException(getClass(), getDescription(), name);
+		return (T) block.eval();
+	}
+
+	public <T> T get(String name) {
+		LetBlock block = letBlocks().get(name);
+		if (block == null) throw new MissingLetException(getClass(), getDescription(), name);
+		return (T) block.eval();
 	}
 
 	public void it(String desc, ItBlock spec) {
@@ -78,11 +90,15 @@ public abstract class SpecComponent<T> {
 			printMessage(capitalize(desc), RED);
 			printAssertionError(cause);
 			report.fail();
-		} catch (Throwable cause) {
-			printMessage(capitalize(desc), RED);
-			printError(cause.getMessage());
-			report.error();
+		} catch (Exception exception) {
+			printException(desc, exception);
 		}
+	}
+
+	protected void printException(String description, Exception exception) {
+		printMessage(capitalize(description), RED);
+		printError(exception.getMessage());
+		report.error();
 	}
 
 	private void resetSubject() {
@@ -105,7 +121,7 @@ public abstract class SpecComponent<T> {
 		Scanner scanner = new Scanner(cause.getMessage());
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine().replace("\n", "");
-			if(!line.isEmpty()) printMessage(line, RED);
+			if (!line.isEmpty()) printMessage(line, RED);
 		}
 		scanner.close();
 	}

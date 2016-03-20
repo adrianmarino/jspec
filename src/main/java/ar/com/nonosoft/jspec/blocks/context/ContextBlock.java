@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.blocks;
+package ar.com.nonosoft.jspec.blocks.context;
 
 import ar.com.nonosoft.jspec.structs.impl.Context;
 
