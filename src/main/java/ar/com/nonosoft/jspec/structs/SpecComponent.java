@@ -1,5 +1,11 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.structs;
 
+import ar.com.nonosoft.jspec.blocks.ContextBlock;
+import ar.com.nonosoft.jspec.blocks.ItBlock;
+import ar.com.nonosoft.jspec.blocks.SubjectBlock;
+import ar.com.nonosoft.jspec.output.Output;
+import ar.com.nonosoft.jspec.output.SuiteReport;
+import ar.com.nonosoft.jspec.structs.impl.Context;
 import org.fusesource.jansi.Ansi.Color;
 
 import java.util.Scanner;
@@ -10,14 +16,31 @@ import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.Color.RED;
 
-public abstract class SpecComponent {
+public abstract class SpecComponent<T> {
 
 	protected	static final SuiteReport report = new SuiteReport();
 
 	protected	static final Output output = new Output();
 
-	public void it(String desc, Specification spec) {
+	private SubjectBlock<T> subjectBlock;
+
+	private T subject;
+
+	public void context(String description, ContextBlock<T> block) {
+		new Context<T>(description, block);
+	}
+
+	public void subject(SubjectBlock<T> block) {
+		subjectBlock = block;
+	}
+
+	public T subject() {
+		return subject == null ? subject = subjectBlock.eval() : subject;
+	}
+
+	public void it(String desc, ItBlock spec) {
 		try {
+			resetSubject();
 			spec.eval(new Expect());
 			printMessage(capitalize(desc), GREEN);
 		} catch (AssertionError cause) {
@@ -29,6 +52,10 @@ public abstract class SpecComponent {
 			printError(cause.getMessage());
 			report.error();
 		}
+	}
+
+	private void resetSubject() {
+		subject = null;
 	}
 
 	private void printError(String message) {
@@ -46,9 +73,5 @@ public abstract class SpecComponent {
 
 	private void printMessage(String message, Color color) {
 		output.println(withFgColor(message, color));
-	}
-
-	public void context(String description, ContextBlock block) {
-		new Context(description, block);
 	}
 }

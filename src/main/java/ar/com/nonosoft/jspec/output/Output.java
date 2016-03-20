@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.output;
 
 import static org.apache.commons.lang.StringUtils.repeat;
 

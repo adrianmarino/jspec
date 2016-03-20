@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.structs;
 
 import org.hamcrest.Matcher;
 

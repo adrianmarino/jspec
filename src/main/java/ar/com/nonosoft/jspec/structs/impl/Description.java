@@ -1,17 +1,22 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.structs.impl;
+
+import ar.com.nonosoft.jspec.blocks.DescriptionBlock;
+import ar.com.nonosoft.jspec.blocks.NestedDescriptionBlock;
+import ar.com.nonosoft.jspec.structs.SpecComponent;
 
 import static ar.com.nonosoft.jspec.StringUtils.boldWithFbColor;
 import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.BLUE;
 import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
-public class Description extends SpecComponent {
+public class Description<T> extends SpecComponent<T> {
 
 	public Description(String description, NestedDescriptionBlock block) {
 		printHeader(description);
 		block.eval();
 		printFooter(false);
 	}
+
 	public Description(String description, DescriptionBlock block) {
 		printHeader(description);
 		block.eval(this);
@@ -28,6 +33,6 @@ public class Description extends SpecComponent {
 	}
 
 	public void describe(String desc, NestedDescriptionBlock block) {
-		new Description(desc, block);
+		new Description<T>(desc, block);
 	}
 }

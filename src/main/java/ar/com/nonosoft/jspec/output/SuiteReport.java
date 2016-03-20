@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.output;
 
 import static java.lang.String.valueOf;
 
@@ -25,6 +25,6 @@ public class SuiteReport {
 				.append(", ")
 				.append(errors)
 				.append(errors == 1 ? "error" : " errors")
-				.append(".").toString();
+				.append("").toString();
 	}
 }
