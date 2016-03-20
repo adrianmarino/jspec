@@ -5,6 +5,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
 public class Suite {
+
+	public static final String name = "name";
+
 	public static void main(String[] args)
 	{
 		describe(Stack.class, d -> {
@@ -19,8 +22,10 @@ public class Suite {
 			});
 
 			d.context("when pop the last element", (c) -> {
+				c.let(name, ()-> "adrian" );
 				c.subject(()-> new Stack(){{ push(2); push(1); }});
 				c.it("element is the last pushed", expect -> {
+					expect.that(c.val(name), is(equalTo("adrian")));
 					expect.that(c.subject().pop(), is(equalTo(1)));
 				});
 			});
