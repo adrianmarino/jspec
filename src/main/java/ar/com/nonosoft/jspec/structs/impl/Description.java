@@ -5,20 +5,18 @@ import ar.com.nonosoft.jspec.blocks.NestedDescriptionBlock;
 import ar.com.nonosoft.jspec.structs.SpecComponent;
 
 import static ar.com.nonosoft.jspec.StringUtils.boldWithFbColor;
-import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.fusesource.jansi.Ansi.Color.BLUE;
-import static org.fusesource.jansi.Ansi.Color.DEFAULT;
+import static org.fusesource.jansi.Ansi.Color.*;
 
 public class Description<T> extends SpecComponent<T> {
 
 	public Description(String description, NestedDescriptionBlock block) {
-		printHeader(description);
+		printHeader(description, false);
 		block.eval();
 		printFooter(false);
 	}
 
 	public Description(String description, DescriptionBlock block) {
-		printHeader(description);
+		printHeader(description, true);
 		block.eval(this);
 		printFooter(true);
 	}
@@ -28,8 +26,8 @@ public class Description<T> extends SpecComponent<T> {
 		if(root) output.newline().println(boldWithFbColor(report.toString(), BLUE));
 	}
 
-	private void printHeader(String description) {
-		output.println(boldWithFbColor(capitalize(description), DEFAULT)).beginLevel();
+	private void printHeader(String description, boolean root) {
+		output.println(boldWithFbColor(description, root ? YELLOW : DEFAULT)).beginLevel();
 	}
 
 	public void describe(String desc, NestedDescriptionBlock block) {
