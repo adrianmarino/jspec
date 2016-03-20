@@ -2,12 +2,14 @@ import java.util.Stack;
 
 import static ar.com.nonosoft.jspec.JSpec.describe;
 
+import static org.hamcrest.CoreMatchers.*;
+
 public class StackSpec {
 	public static void main(String[] args) {
 		describe(Stack.class, d -> {
 			d.describe("#new", m -> {
 				m.context("when create an empty stack", c -> {
-					c.it("is empty", expect -> expect.that(new Stack()).isEmpty());
+					c.it("is empty", expect -> expect.that(new Stack().isEmpty(), is(true)));
 				});
 			});
 
@@ -17,7 +19,7 @@ public class StackSpec {
 						Stack<Integer> stack = new Stack<>();
 						stack.push(1);
 
-						expect.that(stack.get(0)).isEqualTo(1);
+						expect.that(stack.get(0), is(equalTo(1)));
 					});
 				});
 			});
@@ -28,7 +30,7 @@ public class StackSpec {
 					stack.push(2);
 					stack.push(1);
 
-					expect.that(stack.pop()).isEqualTo(2);
+					expect.that(stack.pop(), is(equalTo(2)));
 				});
 			});
 		});

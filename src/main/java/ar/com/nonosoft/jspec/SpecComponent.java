@@ -1,5 +1,8 @@
 package ar.com.nonosoft.jspec;
+
 import org.fusesource.jansi.Ansi.Color;
+
+import java.util.Scanner;
 
 import static ar.com.nonosoft.jspec.StringUtils.boldWithFbColor;
 import static ar.com.nonosoft.jspec.StringUtils.withFgColor;
@@ -16,23 +19,32 @@ public abstract class SpecComponent {
 	public void it(String desc, Specification spec) {
 		try {
 			spec.eval(new Expect());
-			printIt(desc, GREEN);
+			printMessage(capitalize(desc), GREEN);
 		} catch (AssertionError cause) {
-			printIt(desc, RED);
-			printErrorDetail("FAIL", cause.getMessage());
+			printMessage(capitalize(desc), RED);
+			printAssertionError(cause);
 			report.fail();
 		} catch (Throwable cause) {
-			printIt(desc, RED);
-			printErrorDetail("ERROR", cause.getMessage());
+			printMessage(capitalize(desc), RED);
+			printError(cause.getMessage());
 			report.error();
 		}
 	}
 
-	private void printIt(String desc, Color color) {
-		output.println(withFgColor(capitalize(desc), color));
+	private void printError(String message) {
+		output.println(boldWithFbColor("ERROR: ", RED) + withFgColor(capitalize(message), RED));
 	}
 
-	private void printErrorDetail(String type, String message) {
-		output.println(boldWithFbColor(type + ": ", RED) + withFgColor(capitalize(message), RED));
+	private void printAssertionError(AssertionError cause) {
+		Scanner scanner = new Scanner(cause.getMessage());
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine().replace("\n", "");
+			if(!line.isEmpty()) printMessage(line, RED);
+		}
+		scanner.close();
+	}
+
+	private void printMessage(String message, Color color) {
+		output.println(withFgColor(message, color));
 	}
 }
