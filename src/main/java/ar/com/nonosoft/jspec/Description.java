@@ -7,14 +7,15 @@ import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 public class Description extends SpecComponent {
 
-	public Description(String description, DescriptionBlock block) {
-		this(description, block, false);
+	public Description(String description, NestedDescriptionBlock block) {
+		printHeader(description);
+		block.eval();
+		printFooter(false);
 	}
-
-	public Description(String description, DescriptionBlock block, boolean root) {
+	public Description(String description, DescriptionBlock block) {
 		printHeader(description);
 		block.eval(this);
-		printFooter(root);
+		printFooter(true);
 	}
 
 	private void printFooter(boolean root) {
@@ -26,11 +27,7 @@ public class Description extends SpecComponent {
 		output.println(boldWithFbColor(capitalize(description), DEFAULT)).beginLevel();
 	}
 
-	public void describe(String desc, DescriptionBlock block) {
+	public void describe(String desc, NestedDescriptionBlock block) {
 		new Description(desc, block);
-	}
-
-	public void context(String description, ContextBlock block) {
-		new Context(description, block);
 	}
 }

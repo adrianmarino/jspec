@@ -47,4 +47,8 @@ public abstract class SpecComponent {
 	private void printMessage(String message, Color color) {
 		output.println(withFgColor(message, color));
 	}
+
+	public void context(String description, ContextBlock block) {
+		new Context(description, block);
+	}
 }
