@@ -3,15 +3,15 @@ package ar.com.nonosoft.jspec.structs.impl;
 import ar.com.nonosoft.jspec.blocks.describe.DescribeBlock;
 import ar.com.nonosoft.jspec.blocks.describe.NestedDescribeBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
-import ar.com.nonosoft.jspec.structs.SpecComponent;
+import ar.com.nonosoft.jspec.structs.Component;
 
 import static ar.com.nonosoft.jspec.StringUtils.boldWithFbColor;
 import static org.fusesource.jansi.Ansi.Color.*;
 
-public class Description<T> extends SpecComponent<Description<T>, T> {
+public class Description<T> extends Component<Description<T>, T> {
 
-	public Description(String description, NestedDescribeBlock block) {
-		super(description);
+	public Description(String description, Component parent, NestedDescribeBlock block) {
+		super(description, parent);
 		printHeader(false);
 		try {
 			block.eval();
@@ -42,6 +42,6 @@ public class Description<T> extends SpecComponent<Description<T>, T> {
 	}
 
 	public void describe(String desc, NestedDescribeBlock block) {
-		new Description<T>(desc, block);
+		new Description<T>(desc, this, block);
 	}
 }

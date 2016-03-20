@@ -9,21 +9,21 @@ public class Suite {
 	public static void main(String[] args)
 	{
 		describe(Stack.class, d -> {
+			d.let("one", 1).let("two", 2);
+
 			d.context("when create an empty stack", c -> {
-				// c.subject(new Stack());
+				c.subject(new Stack());
 
 				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
 			});
 
 			d.context("when push new element onto top", c -> {
-				c.subject(new Stack() {{ push(1); }});
+				c.subject(new Stack() {{ push(c.get("one")); }});
 
-				c.it("has an element onto top", expect -> expect.that(c.subject().get(0), is(equalTo(1))));
+				c.it("has an element onto top", expect -> expect.that(c.subject().get(0), is(equalTo(c.get("one")))));
 			});
 
 			d.context("when pop the last element", (c) -> {
-				c.let("one", 1).let("two", 2);
-
 				c.subject(new Stack(){{ push(c.get("one")); push(c.get("two")); }});
 
 				c.it("element is the last pushed", expect -> {
