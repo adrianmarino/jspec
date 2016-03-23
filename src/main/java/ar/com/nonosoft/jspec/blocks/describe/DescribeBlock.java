@@ -1,7 +1,7 @@
 package ar.com.nonosoft.jspec.blocks.describe;
 
-import ar.com.nonosoft.jspec.structs.impl.Description;
+import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 
-public interface DescribeBlock<T> {
-    void eval(Description<T> description);
+public interface DescribeBlock<SUBJECT> {
+    void eval(RootDescription<SUBJECT> description);
 }

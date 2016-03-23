@@ -1,6 +1,7 @@
+import ar.com.nonosoft.jspec.JSpec;
+
 import java.util.Stack;
 
-import static ar.com.nonosoft.jspec.JSpec.describe;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -8,7 +9,7 @@ public class Suite {
 
 	public static void main(String[] args)
 	{
-		describe(Stack.class, d -> {
+		JSpec.instance().describe(Stack.class, d -> {
 			d.let("one", 1).let("two", 2);
 
 			d.context("when create an empty stack", c -> {
@@ -30,6 +31,6 @@ public class Suite {
 					expect.that(c.subject().pop(), is(equalTo(c.get("two"))));
 				});
 			});
-		});
+		}).run();
 	}
 }

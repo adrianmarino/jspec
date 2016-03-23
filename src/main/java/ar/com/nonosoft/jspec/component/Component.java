@@ -1,14 +1,13 @@
-package ar.com.nonosoft.jspec.structs;
+package ar.com.nonosoft.jspec.component;
 
 import ar.com.nonosoft.jspec.blocks.ItBlock;
 import ar.com.nonosoft.jspec.blocks.LetBlock;
-import ar.com.nonosoft.jspec.blocks.SubjectBlock;
-import ar.com.nonosoft.jspec.blocks.context.ContextBlock;
+import ar.com.nonosoft.jspec.exception.JSpecException;
+import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.SuiteReport;
-import ar.com.nonosoft.jspec.structs.impl.Context;
 import org.fusesource.jansi.Ansi.Color;
 
 import java.util.HashMap;
@@ -21,7 +20,9 @@ import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.Color.RED;
 
-public abstract class Component<THIS, SUBJECT> {
+public abstract class Component<COMPONENT, SUBJECT> {
+
+	private static final String SUBJECT = "subject";
 
 	protected static final SuiteReport report = new SuiteReport();
 
@@ -31,14 +32,10 @@ public abstract class Component<THIS, SUBJECT> {
 
 	private Component parent;
 
-	private SubjectBlock<SUBJECT> subjectBlock;
-
 	private Map<String, LetBlock> letBlocks;
 
-	private SUBJECT subject;
-
 	public Component(String description) {
-		this(description, null);
+		this.description = description;
 	}
 
 	public Component(String description, Component parent) {
@@ -46,33 +43,26 @@ public abstract class Component<THIS, SUBJECT> {
 		this.parent = parent;
 	}
 
-	public void context(String description, ContextBlock<SUBJECT> block) {
-		new Context<SUBJECT>(description, this, block);
+	public COMPONENT subject(LetBlock<SUBJECT> block) {
+		return let(SUBJECT, block);
 	}
 
-	public THIS subject(SubjectBlock<SUBJECT> block) {
-		subjectBlock = block;
-		return (THIS)this;
-	}
-
-	public THIS subject(SUBJECT value) {
-		subjectBlock = () -> value;
-		return (THIS)this;
+	public COMPONENT subject(SUBJECT value) {
+		return subject(() -> value);
 	}
 
 	public SUBJECT subject() {
-		if (subjectBlock == null) throw new MissingSubjectException();
-		return subject == null ? subject = subjectBlock.eval() : subject;
+		LetBlock block = letLockUp(SUBJECT, new MissingSubjectException());
+		return (SUBJECT) block.eval();
 	}
 
-	public THIS let(String name, LetBlock block) {
+	public COMPONENT let(String name, LetBlock block) {
 		letBlocks().put(name, block);
-		return (THIS)this;
+		return (COMPONENT)this;
 	}
 
-	public THIS let(String name, Object value) {
-		letBlocks().put(name, () -> value);
-		return (THIS)this;
+	public COMPONENT let(String name, Object value) {
+		return let(name, () -> value);
 	}
 
 	public <T> T get(String name) {
@@ -80,22 +70,12 @@ public abstract class Component<THIS, SUBJECT> {
 	}
 
 	public <T> T get(String name, Class<T> clazz) {
-		Component component = this;
-		LetBlock block = null;
-
-		while(component != null && block == null) {
-			block = component.letBlock(name);
-			component = component.parent();
-		}
-
-		if (block == null) throw new MissingLetException( name);
-
+		LetBlock block = letLockUp(name, new MissingLetException(name));
 		return (T) block.eval();
 	}
 
 	public void it(String desc, ItBlock spec) {
 		try {
-			resetSubject();
 			spec.eval(new Expect());
 			resetLets();
 			printMessage(capitalize(desc), GREEN);
@@ -106,6 +86,20 @@ public abstract class Component<THIS, SUBJECT> {
 		} catch (Exception exception) {
 			printException(desc, exception);
 		}
+	}
+
+	public String description() {
+		return description;
+	}
+
+	public void perform(BlockExecutor executor) {
+		printHeader();
+		try {
+			executor.eval();
+		} catch (JSpecException exception) {
+			printException(description(), exception);
+		}
+		printFooter();
 	}
 
 	protected void printException(String description, Exception exception) {
@@ -122,12 +116,24 @@ public abstract class Component<THIS, SUBJECT> {
 		return parent;
 	}
 
-	private Map<String, LetBlock> letBlocks() {
-		return letBlocks == null ? letBlocks = new HashMap<>() : letBlocks;
+	protected abstract void printHeader();
+
+	protected abstract void printFooter();
+
+	private LetBlock letLockUp(String name, MissingBlockException exception) {
+		Component component = this;
+		LetBlock block = null;
+		while(component != null && block == null) {
+			block = component.letBlock(name);
+			component = component.parent();
+		}
+
+		if (block == null) throw exception;
+		return block;
 	}
 
-	private void resetSubject() {
-		subject = null;
+	private Map<String, LetBlock> letBlocks() {
+		return letBlocks == null ? letBlocks = new HashMap<>() : letBlocks;
 	}
 
 	private void resetLets() {
@@ -149,9 +155,5 @@ public abstract class Component<THIS, SUBJECT> {
 
 	private void printMessage(String message, Color color) {
 		output.println(withFgColor(message, color));
-	}
-
-	public String getDescription() {
-		return description;
 	}
 }

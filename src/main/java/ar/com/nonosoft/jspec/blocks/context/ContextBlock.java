@@ -1,7 +1,7 @@
 package ar.com.nonosoft.jspec.blocks.context;
 
-import ar.com.nonosoft.jspec.structs.impl.Context;
+import ar.com.nonosoft.jspec.component.context.impl.RootContext;
 
-public interface ContextBlock<T> {
-	void eval(Context<T> context);
+public interface ContextBlock<SUBJECT> {
+	void eval(RootContext<SUBJECT> context);
 }
