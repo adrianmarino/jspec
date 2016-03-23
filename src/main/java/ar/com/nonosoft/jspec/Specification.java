@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Specification<SUBJECT> {
 
-	public void describe(DescribeBlock<SUBJECT> block) {
-		descriptions.add(new RootDescription<>(getClass().getName(), block));
+	public void describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
+		descriptions.add(new RootDescription<>(clazz.getName(), block));
 	}
 
-	public void run() {
+  public void run() {
 		descriptions.forEach(RootDescription::run);
 	}
 

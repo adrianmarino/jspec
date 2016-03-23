@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
 public class StackSpec extends Specification<Stack> {{
-		describe(d -> {
+		describe(Stack.class, d -> {
 			d.let("one", 1).let("two", 2);
 
 			d.context("when create an empty stack", c -> {
