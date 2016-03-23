@@ -1,5 +1,6 @@
 import ar.com.nonosoft.jspec.SpecSuite;
 import ar.com.nonosoft.jspec.SpecWriter;
+import com.nonosoft.test.StackSpec;
 
 import java.util.Stack;
 
@@ -8,7 +9,11 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class IntegrationTest {
 	public static void main(String[] args) {
-		new SpecSuite().addSpec(StackSpec.class).addWriter(stackSpec()).run();
+		new SpecSuite()
+				.addSpec(StackSpec.class)
+				.addAllSpecsOn("com.nonosoft.test")
+				.addWriter(stackSpec())
+				.run();
 	}
 
 	private static SpecWriter stackSpec() {

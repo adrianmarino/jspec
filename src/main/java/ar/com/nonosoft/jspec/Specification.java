@@ -9,11 +9,7 @@ import java.util.List;
 public class Specification<SUBJECT> {
 
 	public void describe(DescribeBlock<SUBJECT> block) {
-		describe(getClass().getName(), block);
-	}
-
-	public void describe(String description, DescribeBlock<SUBJECT> block) {
-		descriptions.add(new RootDescription<>(description, block));
+		descriptions.add(new RootDescription<>(getClass().getName(), block));
 	}
 
 	public void run() {

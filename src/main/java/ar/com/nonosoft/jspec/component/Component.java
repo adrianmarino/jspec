@@ -1,5 +1,6 @@
 package ar.com.nonosoft.jspec.component;
 
+import ar.com.nonosoft.jspec.SpecSuite;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.block.LetBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
@@ -24,9 +25,11 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	private static final String SUBJECT = "subject";
 
-	protected static final SuiteReport report = new SuiteReport();
+	private SpecSuite suite;
 
-	protected static final Output output = new Output();
+	public static final SuiteReport report = new SuiteReport();
+
+	public static final Output output = new Output();
 
 	protected String description;
 

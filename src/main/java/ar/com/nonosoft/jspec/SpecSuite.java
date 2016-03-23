@@ -1,14 +1,28 @@
 package ar.com.nonosoft.jspec;
 
+import ar.com.nonosoft.jspec.component.Component;
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 import ar.com.nonosoft.jspec.exception.JSpecException;
+import org.reflections.Reflections;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
+import static org.fusesource.jansi.Ansi.Color.BLUE;
 
 public class SpecSuite {
 
-	public SpecSuite addSpec(Class specification) {
+	public SpecSuite addAllSpecsOn(String packageName) {
+		Reflections reflections = new Reflections(packageName);
+		Iterator<Class<? extends Specification>> iterator = reflections.getSubTypesOf(Specification.class).iterator();
+		while(iterator.hasNext())
+			specifications.add((Class<Specification<?>>) iterator.next());
+		return this;
+	}
+
+	public <SPEC extends Specification<?>> SpecSuite addSpec(Class<SPEC> specification) {
 		specifications.add((Class<Specification<?>>) specification);
 		return this;
 	}
@@ -21,6 +35,7 @@ public class SpecSuite {
 	public void run() {
 		runSpecifications();
 		descriptions.forEach(RootDescription::run);
+		Component.output.newline().println(boldWithFbColor(Component.report.toString(), BLUE));
 	}
 
 	private void runSpecifications() {

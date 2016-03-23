@@ -30,7 +30,6 @@ public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 
 	protected void printFooter() {
 		output.endLevel();
-		output.newline().println(boldWithFbColor(report.toString(), BLUE));
 	}
 
 	protected void printHeader() {
