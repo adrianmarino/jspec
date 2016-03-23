@@ -1,6 +1,6 @@
 package ar.com.nonosoft.jspec.component.description;
 
-import ar.com.nonosoft.jspec.blocks.context.ContextBlock;
+import ar.com.nonosoft.jspec.block.context.ContextBlock;
 import ar.com.nonosoft.jspec.component.Component;
 import ar.com.nonosoft.jspec.component.context.impl.RootContext;
 

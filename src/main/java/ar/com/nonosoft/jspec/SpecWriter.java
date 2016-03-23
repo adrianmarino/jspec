@@ -1,25 +1,25 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.blocks.describe.DescribeBlock;
+import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecRunner {
+public class SpecWriter {
 
 	private List<RootDescription> descriptions;
 
-	public <SUBJECT> SpecRunner describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
+	public <SUBJECT> SpecWriter describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
 		descriptions.add(new RootDescription<>(clazz.getName(), block));
 		return this;
 	}
 
-	public void run() {
-		descriptions.forEach(RootDescription::run);
+	List<RootDescription> getDescriptions() {
+		return descriptions;
 	}
 
-	public SpecRunner() {
+	public SpecWriter() {
 		descriptions = new ArrayList<>();
 	}
 }

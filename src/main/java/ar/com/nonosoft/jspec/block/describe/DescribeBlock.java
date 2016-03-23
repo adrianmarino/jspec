@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.blocks.describe;
+package ar.com.nonosoft.jspec.block.describe;
 
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 

@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.blocks;
+package ar.com.nonosoft.jspec.block;
 
 import ar.com.nonosoft.jspec.component.Expect;
 

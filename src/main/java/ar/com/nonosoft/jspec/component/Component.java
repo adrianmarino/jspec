@@ -1,7 +1,7 @@
 package ar.com.nonosoft.jspec.component;
 
-import ar.com.nonosoft.jspec.blocks.ItBlock;
-import ar.com.nonosoft.jspec.blocks.LetBlock;
+import ar.com.nonosoft.jspec.block.ItBlock;
+import ar.com.nonosoft.jspec.block.LetBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ar.com.nonosoft.jspec.StringUtils.boldWithFbColor;
-import static ar.com.nonosoft.jspec.StringUtils.withFgColor;
+import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
+import static ar.com.nonosoft.jspec.util.StringUtils.withFgColor;
 import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.Color.RED;

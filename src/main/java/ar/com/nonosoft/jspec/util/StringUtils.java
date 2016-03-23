@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.util;
 
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;

@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.blocks.context;
+package ar.com.nonosoft.jspec.block.context;
 
 public interface NestedContextBlock {
 	void eval();

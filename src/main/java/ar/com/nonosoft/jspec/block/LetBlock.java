@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.blocks;
+package ar.com.nonosoft.jspec.block;
 
 public interface LetBlock<T> {
 	T eval();

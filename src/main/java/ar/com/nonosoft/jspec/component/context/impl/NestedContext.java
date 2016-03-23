@@ -1,6 +1,6 @@
 package ar.com.nonosoft.jspec.component.context.impl;
 
-import ar.com.nonosoft.jspec.blocks.context.NestedContextBlock;
+import ar.com.nonosoft.jspec.block.context.NestedContextBlock;
 import ar.com.nonosoft.jspec.component.Component;
 import ar.com.nonosoft.jspec.component.context.Context;
 

@@ -1,11 +1,11 @@
-import ar.com.nonosoft.jspec.Spec;
+import ar.com.nonosoft.jspec.Specification;
 
 import java.util.Stack;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-public class StackSpec extends Spec<Stack> {{
+public class StackSpec extends Specification<Stack> {{
 		describe(d -> {
 			d.let("one", 1).let("two", 2);
 
