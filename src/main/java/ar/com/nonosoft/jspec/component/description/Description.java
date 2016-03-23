@@ -4,6 +4,7 @@ import ar.com.nonosoft.jspec.blocks.context.ContextBlock;
 import ar.com.nonosoft.jspec.component.Component;
 import ar.com.nonosoft.jspec.component.context.impl.RootContext;
 
+
 public abstract class Description<SUBJECT> extends Component<Description<SUBJECT>, SUBJECT> {
 
 	public Description(String description, Component parent) {

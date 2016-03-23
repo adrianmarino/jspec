@@ -1,20 +1,12 @@
-import ar.com.nonosoft.jspec.SpecRunner;
+import ar.com.nonosoft.jspec.Spec;
 
 import java.util.Stack;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-public class Suite {
-
-	public static void main(String[] args)
-	{
-		new StackSpec().run();
-		StackSpec();
-	}
-
-	private static void StackSpec() {
-		new SpecRunner().describe(Stack.class, d -> {
+public class StackSpec extends Spec<Stack> {{
+		describe(d -> {
 			d.let("one", 1).let("two", 2);
 
 			d.context("when create an empty stack", c -> {
@@ -34,6 +26,5 @@ public class Suite {
 
 				c.it("element is the last pushed", expect -> {expect.that(c.subject().pop(), is(equalTo(c.get("two")))); });
 			});
-		}).run();
-	}
-}
+		});
+}}

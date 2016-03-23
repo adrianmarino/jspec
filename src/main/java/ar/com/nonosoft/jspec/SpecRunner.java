@@ -6,11 +6,11 @@ import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSpec {
+public class SpecRunner {
 
 	private List<RootDescription> descriptions;
 
-	public <SUBJECT> JSpec describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
+	public <SUBJECT> SpecRunner describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
 		descriptions.add(new RootDescription<>(clazz.getName(), block));
 		return this;
 	}
@@ -19,13 +19,7 @@ public class JSpec {
 		descriptions.forEach(RootDescription::run);
 	}
 
-	public JSpec() {
+	public SpecRunner() {
 		descriptions = new ArrayList<>();
 	}
-
-	public static JSpec instance() {
-		return instance == null ? instance = new JSpec() : instance;
-	}
-
-	private static JSpec instance = null;
 }

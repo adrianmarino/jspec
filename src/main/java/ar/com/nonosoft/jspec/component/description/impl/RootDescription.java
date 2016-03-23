@@ -11,6 +11,10 @@ public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 
 	private DescribeBlock<SUBJECT> block;
 
+	public RootDescription(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
+		this(clazz.getName(), block);
+	}
+
 	public RootDescription(String description, DescribeBlock<SUBJECT> block) {
 		super(description);
 		this.block = block;

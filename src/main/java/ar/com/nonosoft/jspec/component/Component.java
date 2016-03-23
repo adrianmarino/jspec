@@ -28,7 +28,7 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	protected static final Output output = new Output();
 
-	private String description;
+	protected String description;
 
 	private Component parent;
 
