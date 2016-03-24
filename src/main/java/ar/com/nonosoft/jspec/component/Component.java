@@ -16,26 +16,9 @@ import static org.fusesource.jansi.Ansi.Color.GREEN;
 
 public abstract class Component<COMPONENT, SUBJECT> {
 
-	private static final String SUBJECT = "subject";
-
-	public Report report;
-
-	protected String description;
-
-	private Component parent;
-
-	private Map<String, LetBlock> letBlocks;
-
-	public Component(String description, Report report) {
-		this.description = description;
-		this.report = report;
-	}
-
-	public Component(String description, Component parent, Report report) {
-		this.description = description;
-		this.parent = parent;
-		this.report = report;
-	}
+	// --------------------------------------------------------------------------
+	// Public Methods
+	// --------------------------------------------------------------------------
 
 	public COMPONENT subject(LetBlock<SUBJECT> block) {
 		return let(SUBJECT, block);
@@ -94,6 +77,10 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		printFooter();
 	}
 
+	// --------------------------------------------------------------------------
+	// Protected Methods
+	// --------------------------------------------------------------------------
+
 	protected LetBlock letBlock(String name) {
 		return letBlocks().get(name);
 	}
@@ -105,6 +92,10 @@ public abstract class Component<COMPONENT, SUBJECT> {
 	protected abstract void printHeader();
 
 	protected abstract void printFooter();
+
+	// --------------------------------------------------------------------------
+	// Private Methods
+	// --------------------------------------------------------------------------
 
 	private LetBlock letLockUp(String name, MissingBlockException exception) {
 		Component component = this;
@@ -124,5 +115,34 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	private void resetLets() {
 		letBlocks = null;
+	}
+
+	// --------------------------------------------------------------------------
+	// Attributes
+	// --------------------------------------------------------------------------
+
+	private static final String SUBJECT = "subject";
+
+	public Report report;
+
+	protected String description;
+
+	private Component parent;
+
+	private Map<String, LetBlock> letBlocks;
+
+	// --------------------------------------------------------------------------
+	// Constructors
+	// --------------------------------------------------------------------------
+
+	public Component(String description, Report report) {
+		this.description = description;
+		this.report = report;
+	}
+
+	public Component(String description, Component parent, Report report) {
+		this.description = description;
+		this.parent = parent;
+		this.report = report;
 	}
 }

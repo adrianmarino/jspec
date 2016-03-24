@@ -12,6 +12,10 @@ import java.util.List;
 
 public class SpecSuite {
 
+	// --------------------------------------------------------------------------
+	// Public Methods
+	// --------------------------------------------------------------------------
+
 	public SpecSuite addSpecsIn(String packageName) {
 		Reflections reflections = new Reflections(packageName);
 		Iterator<Class<? extends Specification>> iterator = reflections.getSubTypesOf(Specification.class).iterator();
@@ -19,6 +23,7 @@ public class SpecSuite {
 			specifications.add((Class<Specification<?>>) iterator.next());
 		return this;
 	}
+
 	public <SPEC extends Specification<?>> SpecSuite addSpec(Class<SPEC> specification) {
 		specifications.add((Class<Specification<?>>) specification);
 		return this;
@@ -35,6 +40,10 @@ public class SpecSuite {
 		System.out.println(report);
 	}
 
+	// --------------------------------------------------------------------------
+	// Private Methods
+	// --------------------------------------------------------------------------
+
 	private void runSpecifications() {
 		for(Class<Specification<?>> specification : specifications) {
 			try {
@@ -45,19 +54,19 @@ public class SpecSuite {
 		}
 	}
 
-	List<RootDescription> descriptions() {
-		return descriptions;
-	}
-
-	Report report() {
-		return report;
-	}
+	// --------------------------------------------------------------------------
+	// Attributes
+	// --------------------------------------------------------------------------
 
 	private List<Class<Specification<?>>> specifications;
 
 	private List<RootDescription> descriptions;
 
 	private Report report;
+
+	// --------------------------------------------------------------------------
+	// Constructors
+	// --------------------------------------------------------------------------
 
 	public SpecSuite() {
 		specifications = new ArrayList<>();
