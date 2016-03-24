@@ -14,6 +14,6 @@ public abstract class MissingBlockException extends JSpecException {
 	private static String message(String blockName, String blockType) {
 		StringBuilder sb = new StringBuilder("Missing ");
 		if (isNotBlank(blockName)) sb.append("'").append(blockName).append("' ");
-		return sb.append(blockType).append(".").toString();
+		return sb.append(blockType).toString();
 	}
 }

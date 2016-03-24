@@ -6,15 +6,14 @@ import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
-import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.output.report.Report;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-
-public abstract class Component<COMPONENT, SUBJECT> {
+public abstract class Component<COMPONENT, SUBJECT>  {
 
 	// --------------------------------------------------------------------------
 	// Public Methods
@@ -51,30 +50,32 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		return (T) block.eval();
 	}
 
-	public void it(String desc, ItBlock spec) {
-		try {
-			spec.eval(new Expect());
-			resetLets();
-			report.printMessage(capitalize(desc), GREEN);
-		} catch (AssertionError cause) {
-			report.printFail(desc, cause);
-		} catch (Exception exception) {
-			report.printError(desc, exception);
-		}
-	}
-
 	public String description() {
 		return description;
 	}
+
 
 	public void perform(BlockExecutor executor) {
 		printHeader();
 		try {
 			executor.eval();
 		} catch (JSpecException exception) {
-			report.printError(description(), exception);
+			report.output().printError(description(), exception);
+			report.error();
 		}
 		printFooter();
+	}
+
+	public String toString() {
+		return description();
+	}
+
+	public void it(String desc, ItBlock block) {
+		its.add(new It(desc, block, this, report));
+	}
+
+	public List<It> its() {
+		return new ArrayList<It>() {{ addAll(its); children.forEach(child -> addAll(child.its())); }};
 	}
 
 	// --------------------------------------------------------------------------
@@ -83,10 +84,6 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	protected LetBlock letBlock(String name) {
 		return letBlocks().get(name);
-	}
-
-	protected Component parent() {
-		return parent;
 	}
 
 	protected abstract void printHeader();
@@ -102,7 +99,7 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		LetBlock block = null;
 		while(component != null && block == null) {
 			block = component.letBlock(name);
-			component = component.parent();
+			component = component.parent;
 		}
 
 		if (block == null) throw exception;
@@ -113,7 +110,16 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		return letBlocks == null ? letBlocks = new HashMap<>() : letBlocks;
 	}
 
-	private void resetLets() {
+	private void initializeParent(Component parent) {
+		this.parent = parent;
+		if(parent != null) parent.children.add(this);
+	}
+
+	// --------------------------------------------------------------------------
+	// Package Methods
+	// --------------------------------------------------------------------------
+
+	void resetLets() {
 		letBlocks = null;
 	}
 
@@ -123,26 +129,31 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	private static final String SUBJECT = "subject";
 
-	public Report report;
+	protected Report report;
 
 	protected String description;
+
+	protected List<Component> children;
 
 	private Component parent;
 
 	private Map<String, LetBlock> letBlocks;
+
+	private List<It> its;
 
 	// --------------------------------------------------------------------------
 	// Constructors
 	// --------------------------------------------------------------------------
 
 	public Component(String description, Report report) {
-		this.description = description;
-		this.report = report;
+		this(description, null, report);
 	}
 
 	public Component(String description, Component parent, Report report) {
+		this.its = new ArrayList<>();
+		this.children = new ArrayList<>();
 		this.description = description;
-		this.parent = parent;
+		initializeParent(parent);
 		this.report = report;
 	}
 }

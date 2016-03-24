@@ -3,7 +3,7 @@ package ar.com.nonosoft.jspec.component.description.impl;
 import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
 import ar.com.nonosoft.jspec.block.describe.NestedDescribeBlock;
 import ar.com.nonosoft.jspec.component.description.Description;
-import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.output.report.Report;
 
 import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
 import static org.fusesource.jansi.Ansi.Color.*;
@@ -14,10 +14,6 @@ public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 		new NestedDescription<SUBJECT>(desc, block, this, report);
 	}
 
-	public void run() {
-		perform(() -> block.eval(this));
-	}
-
 	protected void printFooter() {
 		report.output().endLevel();
 	}
@@ -26,14 +22,16 @@ public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 		report.output().println(boldWithFbColor(description(), YELLOW)).beginLevel();
 	}
 
-	private DescribeBlock<SUBJECT> block;
-
 	public RootDescription(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block, Report report) {
 		this(clazz.getName(), block, report);
 	}
 
 	public RootDescription(String description, DescribeBlock<SUBJECT> block, Report report) {
 		super(description, report);
-		this.block = block;
+		perform(() -> block.eval(this));
+	}
+
+	public void run() {
+		its().forEach(it->it.run());
 	}
 }

@@ -3,7 +3,7 @@ package ar.com.nonosoft.jspec;
 import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 import ar.com.nonosoft.jspec.exception.JSpecException;
-import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.output.report.Report;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class SpecSuite {
 			try {
 				specification.newInstance().run(report);
 			} catch (Exception e) {
-				throw new JSpecException("Error when run " + specification.getName() + " specification.", e);
+				throw new JSpecException("Error when build " + specification.getName() + " specification.", e);
 			}
 		}
 	}
