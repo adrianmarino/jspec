@@ -1,5 +1,6 @@
 package ar.com.nonosoft.jspec;
 
+import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.output.Report;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class SpecSuite {
 
-	public SpecSuite addAllSpecsOn(String packageName) {
+	public SpecSuite addSpecsIn(String packageName) {
 		Reflections reflections = new Reflections(packageName);
 		Iterator<Class<? extends Specification>> iterator = reflections.getSubTypesOf(Specification.class).iterator();
 		while(iterator.hasNext())
@@ -23,8 +24,9 @@ public class SpecSuite {
 		return this;
 	}
 
-	public SpecWriter writer() {
-		return new SpecWriter(this);
+	public <SUBJECT> SpecSuite describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
+		descriptions.add(new RootDescription<>(clazz.getName(), block, report));
+		return this;
 	}
 
 	public void run() {

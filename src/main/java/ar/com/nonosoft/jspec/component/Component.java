@@ -80,7 +80,6 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		}
 	}
 
-
 	public String description() {
 		return description;
 	}
@@ -94,7 +93,6 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		}
 		printFooter();
 	}
-
 
 	protected LetBlock letBlock(String name) {
 		return letBlocks().get(name);

@@ -1,5 +1,4 @@
 import ar.com.nonosoft.jspec.SpecSuite;
-import ar.com.nonosoft.jspec.SpecWriter;
 import com.nonosoft.test.StackSpec;
 
 import java.util.Stack;
@@ -9,17 +8,13 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class IntegrationTest {
 
-	public static final String PACKAGE = "com.nonosoft.test";
-
 	public static void main(String[] args) {
-		SpecSuite suite = new SpecSuite();
-		suite.addSpec(StackSpec.class).addAllSpecsOn(PACKAGE);
-		stackSpec(suite.writer());
-		suite.run();
+		SpecSuite suite = new SpecSuite().addSpec(StackSpec.class).addSpecsIn(PACKAGE);
+		addStackSpec(suite).run();
 	}
 
-	private static void stackSpec(SpecWriter writer) {
-		writer.describe(Stack.class, d -> {
+	private static SpecSuite addStackSpec(SpecSuite suite) {
+		return suite.describe(Stack.class, d -> {
 			d.let("one", 1).let("two", 2);
 
 			d.context("when create an empty stack", c -> {
@@ -37,8 +32,10 @@ public class IntegrationTest {
 			d.context("when pop the last element", (c) -> {
 				c.subject(new Stack() {{ push(c.get("one")); push(c.get("two")); }});
 
-				c.it("element is the last pushed", expect -> {expect.that(c.subject().pop(), is(equalTo(c.get("two")))); });
+				c.it("element is the last pushed", expect -> expect.that(c.subject().pop(), is(equalTo(c.get("two")))) );
 			});
 		});
 	}
+
+	public static final String PACKAGE = "com.nonosoft.test";
 }
