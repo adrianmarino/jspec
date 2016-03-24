@@ -4,6 +4,7 @@ import static org.apache.commons.lang.StringUtils.repeat;
 
 public class Output {
 
+	private StringBuilder output;
 
 	public Output beginLevel() {
 		level++;
@@ -16,22 +17,30 @@ public class Output {
 	}
 
 	public Output newline() {
-		println(NEWLINE);
+		println("");
 		return this;
 	}
 
 	public Output println(String value) {
-		System.out.println(addPrefix(value));
+		output.append(addPrefix(value)).append(NEWLINE);
 		return this;
 	}
 
 	public Output print(String value) {
-		System.out.print(addPrefix(value));
+		output.append(addPrefix(value));
 		return this;
 	}
 
 	private String addPrefix(String value) {
 		return repeat(LEVEL_TAB, level) + value;
+	}
+
+	public String toString() {
+		return output.toString();
+	}
+
+	public void syncWith(Output anOtherOutput) {
+		output.append(anOtherOutput);
 	}
 
 	public static final int ZERO = 0;
@@ -44,5 +53,6 @@ public class Output {
 
 	public Output() {
 		level = ZERO;
+		output = new StringBuilder();
 	}
 }

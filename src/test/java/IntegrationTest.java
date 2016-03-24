@@ -8,16 +8,18 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
 public class IntegrationTest {
+
+	public static final String PACKAGE = "com.nonosoft.test";
+
 	public static void main(String[] args) {
-		new SpecSuite()
-				.addSpec(StackSpec.class)
-				.addAllSpecsOn("com.nonosoft.test")
-				.addWriter(stackSpec())
-				.run();
+		SpecSuite suite = new SpecSuite();
+		suite.addSpec(StackSpec.class).addAllSpecsOn(PACKAGE);
+		stackSpec(suite.writer());
+		suite.run();
 	}
 
-	private static SpecWriter stackSpec() {
-		return new SpecWriter().describe(Stack.class, d -> {
+	private static void stackSpec(SpecWriter writer) {
+		writer.describe(Stack.class, d -> {
 			d.let("one", 1).let("two", 2);
 
 			d.context("when create an empty stack", c -> {

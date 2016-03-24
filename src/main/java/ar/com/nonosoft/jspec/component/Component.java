@@ -1,35 +1,24 @@
 package ar.com.nonosoft.jspec.component;
 
-import ar.com.nonosoft.jspec.SpecSuite;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.block.LetBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
-import ar.com.nonosoft.jspec.output.Output;
-import ar.com.nonosoft.jspec.output.SuiteReport;
-import org.fusesource.jansi.Ansi.Color;
+import ar.com.nonosoft.jspec.output.Report;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
-import static ar.com.nonosoft.jspec.util.StringUtils.withFgColor;
 import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.Color.RED;
 
 public abstract class Component<COMPONENT, SUBJECT> {
 
 	private static final String SUBJECT = "subject";
 
-	private SpecSuite suite;
-
-	public static final SuiteReport report = new SuiteReport();
-
-	public static final Output output = new Output();
+	public Report report;
 
 	protected String description;
 
@@ -37,13 +26,15 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	private Map<String, LetBlock> letBlocks;
 
-	public Component(String description) {
+	public Component(String description, Report report) {
 		this.description = description;
+		this.report = report;
 	}
 
-	public Component(String description, Component parent) {
+	public Component(String description, Component parent, Report report) {
 		this.description = description;
 		this.parent = parent;
+		this.report = report;
 	}
 
 	public COMPONENT subject(LetBlock<SUBJECT> block) {
@@ -81,15 +72,14 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		try {
 			spec.eval(new Expect());
 			resetLets();
-			printMessage(capitalize(desc), GREEN);
+			report.printMessage(capitalize(desc), GREEN);
 		} catch (AssertionError cause) {
-			printMessage(capitalize(desc), RED);
-			printAssertionError(cause);
-			report.fail();
+			report.printFail(desc, cause);
 		} catch (Exception exception) {
-			printException(desc, exception);
+			report.printError(desc, exception);
 		}
 	}
+
 
 	public String description() {
 		return description;
@@ -100,16 +90,11 @@ public abstract class Component<COMPONENT, SUBJECT> {
 		try {
 			executor.eval();
 		} catch (JSpecException exception) {
-			printException(description(), exception);
+			report.printError(description(), exception);
 		}
 		printFooter();
 	}
 
-	protected void printException(String description, Exception exception) {
-		printMessage(capitalize(description), RED);
-		printError(exception.getMessage());
-		report.error();
-	}
 
 	protected LetBlock letBlock(String name) {
 		return letBlocks().get(name);
@@ -141,22 +126,5 @@ public abstract class Component<COMPONENT, SUBJECT> {
 
 	private void resetLets() {
 		letBlocks = null;
-	}
-
-	private void printError(String message) {
-		output.println(boldWithFbColor("ERROR: ", RED) + withFgColor(capitalize(message), RED));
-	}
-
-	private void printAssertionError(AssertionError cause) {
-		Scanner scanner = new Scanner(cause.getMessage());
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine().replace("\n", "");
-			if (!line.isEmpty()) printMessage(line, RED);
-		}
-		scanner.close();
-	}
-
-	private void printMessage(String message, Color color) {
-		output.println(withFgColor(message, color));
 	}
 }
