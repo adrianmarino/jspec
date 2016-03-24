@@ -22,7 +22,7 @@ public class JSpecRunner extends ParentRunner<It> {
 
 	@Override
 	protected Description describeChild(It it) {
-		return Description.createTestDescription(it.description(), "");
+		return Description.createTestDescription("It " + it.description(), "");
 	}
 
 	@Override
