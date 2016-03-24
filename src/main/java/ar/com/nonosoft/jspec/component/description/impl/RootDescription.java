@@ -19,7 +19,7 @@ public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 	}
 
 	protected void printHeader() {
-		report.output().println(boldWithFbColor(description(), YELLOW)).beginLevel();
+		report.output().println(boldWithFbColor(description(), DEFAULT)).beginLevel();
 	}
 
 	public RootDescription(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block, Report report) {

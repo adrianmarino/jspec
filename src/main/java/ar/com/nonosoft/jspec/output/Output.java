@@ -24,18 +24,18 @@ public class Output {
 	}
 
 	public Output printFail(String desc, AssertionError cause) {
-		printMessage(capitalize(desc), RED).beginLevel(FAIL_LEVEL);
-		errorLines(cause).forEach(line -> printMessage(line, RED));
+		print(withFgColor(capitalize(desc), RED)).println(boldWithFbColor(" FAIL!", RED)).beginLevel(FAIL_LEVEL);
+		errorLines(cause).forEach(line -> printBoldMessage(line, RED));
 		endLevel(FAIL_LEVEL);
 		return this;
 	}
 
 	public Output printError(String description, Exception exception) {
 		return println(new StringBuilder(withFgColor(capitalize(description), RED))
-				.append(withFgColor(" (", RED))
-				.append(boldWithFbColor("ERROR: ", RED))
+				.append(boldWithFbColor(" ERROR!", RED))
+				.append(withFgColor(" (Error: ", RED))
 				.append(withFgColor(capitalize(exception.getMessage()), RED))
-				.append(withFgColor(").", RED))
+				.append(withFgColor(")", RED))
 				.toString());
 	}
 
@@ -43,6 +43,9 @@ public class Output {
 		return println(withFgColor(message, color));
 	}
 
+	public Output printBoldMessage(String message, Ansi.Color color) {
+		return println(boldWithFbColor(message, color));
+	}
 
 	public Output beginLevel() {
 		return beginLevel(1);
