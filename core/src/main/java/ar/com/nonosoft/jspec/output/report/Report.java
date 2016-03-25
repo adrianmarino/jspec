@@ -12,12 +12,16 @@ public class Report {
 		return output;
 	}
 
-	public void fail() {
+	public void intFailCounter() {
 		failures++;
 	}
 
-	public void error() {
+	public void incErrorCounter() {
 		errors++;
+	}
+
+	public void incTestCounter() {
+		tests++;
 	}
 
 	public void syncWith(Report report) {
@@ -36,14 +40,18 @@ public class Report {
 
 	private String footer() {
 		return boldWithFbColor(
-				new StringBuilder(valueOf(failures))
-					.append(" ")
-					.append(failures == 1 ? "failure" : "failures")
-					.append(", ")
-					.append(errors)
-					.append(" ")
-					.append(errors == 1 ? "error" : "errors")
-					.append(".").toString(),
+				new StringBuilder(valueOf(tests))
+						.append(" ")
+						.append(tests == 1 ? "test" : "tests")
+						.append(", ")
+						.append(valueOf(failures))
+						.append(" ")
+						.append(failures == 1 ? "failure" : "failures")
+						.append(", ")
+						.append(errors)
+						.append(" ")
+						.append(errors == 1 ? "incErrorCounter" : "errors")
+						.append(".").toString(),
 				BLUE
 		);
 	}
@@ -52,7 +60,7 @@ public class Report {
 	// Attributes
 	// --------------------------------------------------------------------------
 
-	private long failures, errors;
+	private long failures, errors, tests;
 
 	private Output output;
 
@@ -61,7 +69,7 @@ public class Report {
 	// --------------------------------------------------------------------------
 
 	public Report() {
-		failures = errors = 0;
+		failures = errors = tests = 0;
 		output = new Output();
 	}
 }

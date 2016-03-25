@@ -1,5 +1,6 @@
 package ar.com.nonosoft.jspec.component;
 
+import ar.com.nonosoft.jspec.It;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.block.LetBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
@@ -61,7 +62,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 			executor.eval();
 		} catch (JSpecException exception) {
 			report.output().printError(description(), exception);
-			report.error();
+			report.incErrorCounter();
 		}
 		printFooter();
 	}
@@ -78,6 +79,10 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 		return new ArrayList<It>() {{ addAll(its); children.forEach(child -> addAll(child.its())); }};
 	}
 
+	public void resetLets() {
+		letBlocks = null;
+	}
+
 	// --------------------------------------------------------------------------
 	// Protected Methods
 	// --------------------------------------------------------------------------
@@ -89,7 +94,6 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	protected abstract void printHeader();
 
 	protected abstract void printFooter();
-
 	// --------------------------------------------------------------------------
 	// Private Methods
 	// --------------------------------------------------------------------------
@@ -115,13 +119,6 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 		if(parent != null) parent.children.add(this);
 	}
 
-	// --------------------------------------------------------------------------
-	// Package Methods
-	// --------------------------------------------------------------------------
-
-	void resetLets() {
-		letBlocks = null;
-	}
 
 	// --------------------------------------------------------------------------
 	// Attributes

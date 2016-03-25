@@ -1,6 +1,5 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.component.It;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;

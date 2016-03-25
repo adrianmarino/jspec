@@ -1,13 +1,10 @@
-package ar.com.nonosoft.jspec.component;
+package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ItBlock;
+import ar.com.nonosoft.jspec.component.Component;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.junit.runners.model.Statement;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang.StringUtils.capitalize;
@@ -25,16 +22,17 @@ public class It extends Statement {
 	}
 
 	public void run() {
+		report.incTestCounter();
 		try {
 			block.eval(new Expect());
 			parent.resetLets();
 			report.output().var(id, new Output().printMessage(capitalize(description), GREEN));
 		} catch (AssertionError cause) {
 			report.output().var(id, new Output().printFail(description, cause));
-			report.fail();
+			report.intFailCounter();
 		} catch (Exception exception) {
 			report.output().var(id, new Output().printError(description, exception));
-			report.error();
+			report.incErrorCounter();
 		}
 	}
 
@@ -45,22 +43,6 @@ public class It extends Statement {
 	public String toString() {
 		return format("It %s", description());
 	}
-
-	// --------------------------------------------------------------------------
-	// Private Methods
-	// --------------------------------------------------------------------------
-
-	private List<String> assertLines(AssertionError error) {
-		List<String> lines= new ArrayList<>();
-		Scanner scanner = new Scanner(error.getMessage());
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine().replace("\n", "");
-			if (!line.isEmpty()) lines.add(line);
-		}
-
-		return lines;
-	}
-
 
 	// --------------------------------------------------------------------------
 	// Attributes
