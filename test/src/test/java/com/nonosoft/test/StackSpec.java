@@ -14,11 +14,11 @@ public class StackSpec extends Specification<Stack> {{
 			d.context("when create an empty stack", c -> {
 				c.subject(new Stack());
 
-				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(false)));
+				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
 			});
 
 			d.context("when push new element onto top", c -> {
-				// c.subject(new Stack() {{ push(c.get("one")); }});
+				c.subject(new Stack() {{ push(c.get("one")); }});
 
 				c.it("has an element onto top", expect -> expect.that(c.subject().get(0), is(equalTo(c.get("one")))));
 			});

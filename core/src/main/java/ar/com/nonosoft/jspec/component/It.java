@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.sun.xml.internal.ws.util.StringUtils.capitalize;
 import static java.lang.String.format;
+import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 
 public class It extends Statement {
