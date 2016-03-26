@@ -1,3 +1,4 @@
 rootProject.name = 'jspec'
 
-include ":core", ":test"
+include ":core", ":test", 'jspec-plugin'
+

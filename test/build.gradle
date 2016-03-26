@@ -1,24 +1,14 @@
-class Spec implements Plugin<Project> {
-	void apply(Project project) {
-		project.task('spec', type: JavaExec) {
-			description 'Run all test classes that inherit of Spectation abstract class'
-
-			dependsOn project.clean
-			dependsOn project.build
-			project.test.enabled = false
-			project.build.shouldRunAfter project.clean
-
-			main = 'ar.com.nonosoft.jspec.runner.ConsoleRunner'
-			classpath = project.sourceSets.main.runtimeClasspath
-			classpath += project.sourceSets.test.runtimeClasspath + project.files("${project.projectDir}/test")
-
-			if (project.hasProperty("packageName")) args project.packageName
-		}
-	}
-}
-
-apply plugin: Spec
+apply plugin: 'ar.com.nonosoft.jspec.spec'
 
 dependencies {
 	compile project(':core')
+}
+
+buildscript {
+	repositories {
+		mavenLocal()
+	}
+	dependencies {
+		classpath group: 'ar.com.nonosoft', name: 'jspec-plugin', version: '0.0.1'
+	}
 }
