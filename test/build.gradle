@@ -1,17 +1,22 @@
-dependencies {
-	compile project(':core')
+class SpecRun implements Plugin<Project> {
+	void apply(Project project) {
+		project.task('specRun', type: JavaExec) {
+			dependsOn project.clean
+			dependsOn project.build
+			project.test.enabled = false
+			project.build.shouldRunAfter project.clean
+
+			main = 'ar.com.nonosoft.test.jspec.runner.ConsoleRunner'
+			classpath = project.sourceSets.main.runtimeClasspath
+			classpath += project.sourceSets.test.runtimeClasspath + project.files("${project.projectDir}/test")
+
+			if (project.hasProperty("packageName")) args project.packageName
+		}
+	}
 }
 
-task specRun(type:JavaExec) {
-	specRun.dependsOn clean
-	specRun.dependsOn build
-	test.enabled = false
+apply plugin: SpecRun
 
-	build.shouldRunAfter clean
-
-	main = 'ar.com.nonosoft.test.jspec.runner.ConsoleRunner'
-	classpath = sourceSets.main.runtimeClasspath
-	classpath += project.sourceSets.test.runtimeClasspath + files("${projectDir}/test")
-
-	if (binding.variables.containsKey("packageName"))  args packageName
+dependencies {
+	compile project(':core')
 }
