@@ -33,7 +33,7 @@ public class Report {
 	}
 
 	public String toString() {
-		return output.newline().println(footer()).toString();
+		return output.newline().endLevel().println(footer()).toString();
 	}
 
 	// --------------------------------------------------------------------------
@@ -59,7 +59,7 @@ public class Report {
 	}
 
 	public void specsNotFound() {
-		output.beginLevel().printBoldMessage("Specs not found!", YELLOW).endLevel();
+		output.printBoldMessage("Specs not found!", YELLOW);
 	}
 
 	// --------------------------------------------------------------------------
@@ -76,6 +76,6 @@ public class Report {
 
 	public Report() {
 		failures = errors = tests = 0;
-		output = new Output();
+		output = new Output().beginLevel();
 	}
 }
