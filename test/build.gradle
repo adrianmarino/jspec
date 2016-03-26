@@ -1,3 +1,17 @@
 dependencies {
-	testCompile project(':core')
+	compile project(':core')
+}
+
+task specRun(type:JavaExec) {
+	specRun.dependsOn clean
+	specRun.dependsOn build
+	test.enabled = false
+
+	build.shouldRunAfter clean
+
+	main = 'ar.com.nonosoft.test.jspec.runner.ConsoleRunner'
+	classpath = sourceSets.main.runtimeClasspath
+	classpath += project.sourceSets.test.runtimeClasspath + files("${projectDir}/test")
+
+	if (binding.variables.containsKey("packageName"))  args packageName
 }
