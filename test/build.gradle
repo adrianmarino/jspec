@@ -1,6 +1,6 @@
-class SpecRun implements Plugin<Project> {
+class Spec implements Plugin<Project> {
 	void apply(Project project) {
-		project.task('specRun', type: JavaExec) {
+		project.task('spec', type: JavaExec) {
 			dependsOn project.clean
 			dependsOn project.build
 			project.test.enabled = false
@@ -15,7 +15,7 @@ class SpecRun implements Plugin<Project> {
 	}
 }
 
-apply plugin: SpecRun
+apply plugin: Spec
 
 dependencies {
 	compile project(':core')
