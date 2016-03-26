@@ -3,9 +3,6 @@ package ar.com.nonosoft.jspec;
 import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 import ar.com.nonosoft.jspec.exception.JSpecException;
-import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
-import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
-import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.reflections.Reflections;
 
@@ -38,14 +35,22 @@ public class SpecSuite {
 	}
 
 	public String run() {
-		runSpecifications();
-		descriptions.forEach(RootDescription::run);
+		if(!haveSpecs())
+			report.specsNotFound();
+		else {
+			runSpecifications();
+			descriptions.forEach(RootDescription::run);
+		}
 		return report.toString();
 	}
 
 	// --------------------------------------------------------------------------
 	// Private Methods
 	// --------------------------------------------------------------------------
+
+	private Boolean haveSpecs() {
+		return !(specifications.isEmpty() && descriptions.isEmpty());
+	}
 
 	private void runSpecifications() {
 		for(Class<Specification<?>> specification : specifications) {

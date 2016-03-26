@@ -2,11 +2,10 @@ package ar.com.nonosoft.jspec.output.report;
 
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.util.StringUtils;
-import ar.com.nonosoft.jspec.output.Output;
 
-import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
 import static java.lang.String.valueOf;
 import static org.fusesource.jansi.Ansi.Color.BLUE;
+import static org.fusesource.jansi.Ansi.Color.YELLOW;
 
 public class Report {
 
@@ -57,6 +56,10 @@ public class Report {
 						.append(".").toString(),
 				BLUE
 		);
+	}
+
+	public void specsNotFound() {
+		output.beginLevel().printBoldMessage("Specs not found!", YELLOW).endLevel();
 	}
 
 	// --------------------------------------------------------------------------

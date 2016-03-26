@@ -2,9 +2,10 @@ package ar.com.nonosoft.jspec.runner;
 
 import ar.com.nonosoft.jspec.SpecSuite;
 
-import static ar.com.nonosoft.jspec.util.StringUtils.*;
+import static ar.com.nonosoft.jspec.util.StringUtils.NEWLINE;
+import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
 import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
+import static org.fusesource.jansi.Ansi.Color.BLUE;
 
 public class ConsoleRunner {
 
@@ -26,19 +27,19 @@ public class ConsoleRunner {
 	}
 
 	private static String packageName(String[] args) {
-		return args.length == 0 ? EMPTY : args[0];
+		return args.length > 0 ? args[0] : EMPTY;
 	}
 
 	private static StringBuilder newHeader(String packageName) {
-		StringBuilder sb = new StringBuilder(NEWLINE).append(boldAndGreen("Run specs"));
+		StringBuilder sb = new StringBuilder(NEWLINE).append(hStyle("Run specs"));
 
-		if(!packageName.isEmpty()) sb.append(WHITESPACE).append(boldAndGreen(packageName)).append(boldAndGreen(" package"));
+		if(!packageName.isEmpty()) sb.append(hStyle(" in ")).append(hStyle(packageName)).append(hStyle(" package"));
 
-		return sb.append(boldAndGreen("...")).append(NEWLINE).append(NEWLINE);
+		return sb.append(hStyle("...")).append(NEWLINE).append(NEWLINE);
 	}
 
-	private static String boldAndGreen(String value) {
-		return boldWithFbColor(value, GREEN);
+	private static String hStyle(String value) {
+		return boldWithFbColor(value, BLUE);
 	}
 
 }
