@@ -1,6 +1,6 @@
 package ar.com.nonosoft.test;
 
-import ar.com.nonosoft.test.jspec.SpecSuite;
+import ar.com.nonosoft.jspec.SpecSuite;
 
 import java.util.Stack;
 
