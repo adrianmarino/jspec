@@ -1,4 +1,7 @@
 rootProject.name = 'jspec'
 
-include ":core", ":test", 'jspec-plugin'
+include 'jspec-core', 'jspec-plugin'
 
+
+if (!hasProperty('excludeTest'))
+	include 'jspec-test'

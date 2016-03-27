@@ -1,7 +1,7 @@
 apply plugin: 'ar.com.nonosoft.jspec.spec'
 
 dependencies {
-	compile project(':core')
+	compile project(':jspec-core')
 }
 
 buildscript {
