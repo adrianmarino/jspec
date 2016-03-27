@@ -10,6 +10,8 @@ An RSpec like micro framework for java language.
 * Describe your tests as RSpec way.
 * Run a JSpec specification as a JUnit test from your favorite IDE (Idea/Eclipse/Netbeans).
 * Run tests with gradle as "rspec --format=doc" way.
+* Use hamcrest assetions.
+* **Still under construction!**
 
 ### Modules
 
@@ -68,3 +70,11 @@ public class StackSpec extends Specification<Stack> {{
 2. run tests
 
 ![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
+
+
+### TODO
+
+* Many tests.
+* Spring context integration.
+* Spec maven plugin.
+* xit.
