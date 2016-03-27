@@ -35,7 +35,7 @@ gradle -q spec
 
 ### Use
 
-1. Describe a specification
+Step 1: Describe a specification
 
 ```java
 public class StackSpec extends Specification<Stack> {{
@@ -67,7 +67,7 @@ public class StackSpec extends Specification<Stack> {{
 }}
 ```
 
-2. run tests
+Step 2: Run tests
 
 ![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
 
