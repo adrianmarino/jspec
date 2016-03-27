@@ -91,7 +91,7 @@ public class StackSpec extends Specification<Stack> {{
       context("when push new element onto top", () -> {
         subject(new Stack<Integer>() {{ push(get("one")); }});
 
-        it("has an element onto top", () -> expect(subject().get(0), is(equalTo(get('one')))));
+        it("has an element onto top", () -> expect(subject().get(0), is(equalTo(get("one")))));
       });
 
       context("when pop the last element", () -> {
