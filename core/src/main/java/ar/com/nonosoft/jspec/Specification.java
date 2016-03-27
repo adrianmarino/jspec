@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(JSpecRunner.class)
+@SuppressWarnings("unchecked")
 public abstract class Specification<SUBJECT> {
 
 	public void describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {

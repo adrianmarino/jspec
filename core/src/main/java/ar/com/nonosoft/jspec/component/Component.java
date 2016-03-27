@@ -1,9 +1,5 @@
 package ar.com.nonosoft.jspec.component;
 
-import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.block.LetBlock;
-import ar.com.nonosoft.jspec.exception.JSpecException;
-import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
 import ar.com.nonosoft.jspec.It;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.block.LetBlock;
@@ -18,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public abstract class Component<COMPONENT, SUBJECT>  {
 
 	// --------------------------------------------------------------------------

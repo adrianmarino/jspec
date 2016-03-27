@@ -3,9 +3,6 @@ package ar.com.nonosoft.jspec.runner;
 import ar.com.nonosoft.jspec.It;
 import ar.com.nonosoft.jspec.Specification;
 import ar.com.nonosoft.jspec.exception.JSpecException;
-import ar.com.nonosoft.jspec.It;
-import ar.com.nonosoft.jspec.Specification;
-import ar.com.nonosoft.jspec.exception.JSpecException;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
@@ -13,6 +10,7 @@ import org.junit.runners.model.InitializationError;
 
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class JSpecRunner extends ParentRunner<It> {
 
 	// --------------------------------------------------------------------------

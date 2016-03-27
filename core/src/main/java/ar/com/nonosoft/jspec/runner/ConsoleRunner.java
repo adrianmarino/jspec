@@ -4,6 +4,7 @@ import ar.com.nonosoft.jspec.SpecSuite;
 
 import static ar.com.nonosoft.jspec.util.StringUtils.NEWLINE;
 import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
+import static java.lang.System.out;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.fusesource.jansi.Ansi.Color.BLUE;
 
@@ -11,11 +12,7 @@ public class ConsoleRunner {
 
 	public static void main(String[] args) {
 		String packageName = packageName(args);
-
-		StringBuilder output = newHeader(packageName);
-		output.append(runSpecs(packageName));
-
-		System.out.println(output);
+		out.print(newHeader(packageName).append(runSpecs(packageName)));
 	}
 
 	// --------------------------------------------------------------------------

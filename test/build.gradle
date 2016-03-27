@@ -9,6 +9,6 @@ buildscript {
 		mavenLocal()
 	}
 	dependencies {
-		classpath group: 'ar.com.nonosoft', name: 'jspec-plugin', version: '0.0.1'
+		classpath 'ar.com.nonosoft:jspec-plugin:0.0.1'
 	}
 }
