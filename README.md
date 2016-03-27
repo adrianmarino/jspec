@@ -9,7 +9,7 @@ An RSpec like micro framework for java language.
 
 * Describe your tests as RSpec way.
 * Run a JSpec specification as a JUnit test from your favorite IDE (Idea/Eclipse/Netbeans).
-* Run tests from console as "rspec --format=doc" way.
+* Run tests with gradle as "rspec --format=doc" way.
 
 ### Modules
 
@@ -54,7 +54,7 @@ public class StackSpec extends Specification<Stack> {{
 			});
 		});
 
-		d.context("when pop the last element", (c) -> {
+		d.context("when pop the last element", c -> {
 			c.subject(new Stack<Integer>() {{ push(c.get("one")); push(c.get("two")); }});
 
 			c.it("element is the last pushed", expect -> {
