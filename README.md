@@ -31,7 +31,7 @@ gradle clean install -PexcludeTest
 gradle -q spec
 ```
 
-### Describe a Specification
+### Use
 
 1. Describe a specification
 
@@ -67,4 +67,4 @@ public class StackSpec extends Specification<Stack> {{
 
 2. run tests
 
-![alt Models Diagram](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
+![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
