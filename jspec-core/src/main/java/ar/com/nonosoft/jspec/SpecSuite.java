@@ -1,7 +1,8 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
-import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
+import ar.com.nonosoft.jspec.block.Block;
+import ar.com.nonosoft.jspec.container.Container;
+import ar.com.nonosoft.jspec.container.impl.Describe;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.reflections.Reflections;
@@ -19,19 +20,19 @@ public class SpecSuite {
 
 	public SpecSuite addSpecsIn(String packageName) {
 		Reflections reflections = new Reflections(packageName);
-		Iterator<Class<? extends Specification>> iterator = reflections.getSubTypesOf(Specification.class).iterator();
+		Iterator<Class<? extends Spec>> iterator = reflections.getSubTypesOf(Spec.class).iterator();
 		while(iterator.hasNext())
-			specifications.add((Class<Specification<?>>) iterator.next());
+			specifications.add((Class<Spec<?>>) iterator.next());
 		return this;
 	}
 
-	public <SPEC extends Specification<?>> SpecSuite addSpec(Class<SPEC> specification) {
-		specifications.add((Class<Specification<?>>) specification);
+	public <SPEC extends Spec<?>> SpecSuite addSpec(Class<SPEC> specification) {
+		specifications.add((Class<Spec<?>>) specification);
 		return this;
 	}
 
-	public <SUBJECT> SpecSuite describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
-		descriptions.add(new RootDescription<>(clazz.getName(), block, report));
+	public <SUBJECT> SpecSuite describe(Class<SUBJECT> clazz, Block block) {
+		descriptions.add(new Describe<SUBJECT>(clazz.getName(), block, report));
 		return this;
 	}
 
@@ -40,7 +41,7 @@ public class SpecSuite {
 			report.specsNotFound();
 		else {
 			runSpecifications();
-			descriptions.forEach(RootDescription::run);
+			descriptions.forEach(Container::run);
 		}
 		return report.toString();
 	}
@@ -54,7 +55,7 @@ public class SpecSuite {
 	}
 
 	private void runSpecifications() {
-		for(Class<Specification<?>> specification : specifications) {
+		for(Class<Spec<?>> specification : specifications) {
 			try {
 				specification.newInstance().run(report);
 			} catch (Exception e) {
@@ -67,9 +68,9 @@ public class SpecSuite {
 	// Attributes
 	// --------------------------------------------------------------------------
 
-	private List<Class<Specification<?>>> specifications;
+	private List<Class<Spec<?>>> specifications;
 
-	private List<RootDescription> descriptions;
+	private List<Container> descriptions;
 
 	private Report report;
 

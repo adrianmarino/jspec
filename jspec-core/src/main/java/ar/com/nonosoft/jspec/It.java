@@ -1,10 +1,7 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.component.Component;
-import ar.com.nonosoft.jspec.output.Output;
-import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.component.Component;
+import ar.com.nonosoft.jspec.block.Block;
+import ar.com.nonosoft.jspec.container.Container;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.junit.runners.model.Statement;
@@ -21,13 +18,13 @@ public class It extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		block.eval(new Expect());
+		block.eval();
 	}
 
 	public void run() {
 		report.incTestCounter();
 		try {
-			block.eval(new Expect());
+			block.eval();
 			parent.resetLets();
 			report.output().var(id, new Output().printMessage(capitalize(description), GREEN));
 		} catch (AssertionError cause) {
@@ -53,9 +50,9 @@ public class It extends Statement {
 
 	private String description;
 
-	private ItBlock block;
+	private Block block;
 
-	private Component parent;
+	private Container parent;
 
 	private Report report;
 
@@ -67,7 +64,7 @@ public class It extends Statement {
 	// Constructors
 	// --------------------------------------------------------------------------
 
-	public It(String description, ItBlock block, Component parent, Report report) {
+	public It(String description, Block block, Container parent, Report report) {
 		this.description = description;
 		this.parent = parent;
 		this.block = block;

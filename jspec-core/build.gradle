@@ -1,6 +1,8 @@
 group   = 'ar.com.nonosoft'
 version = '0.0.1'
 
+sourceCompatibility = 1.8
+
 apply plugin: "maven"
 
 dependencies {

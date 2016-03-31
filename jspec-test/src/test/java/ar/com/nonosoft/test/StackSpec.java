@@ -1,32 +1,36 @@
 package ar.com.nonosoft.test;
 
-import ar.com.nonosoft.jspec.Specification;
+import ar.com.nonosoft.jspec.Spec;
 
 import java.util.Stack;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-public class StackSpec extends Specification<Stack> {{
-		describe(Stack.class, d -> {
-			d.let("one", 1).let("two", 2);
+public class StackSpec extends Spec<Stack> {{
+	let("one", 1).let("two", 2);
 
-			d.context("when create an empty stack", c -> {
-				c.subject(new Stack<Integer>());
-
-				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
-			});
-
-			d.context("when push new element onto top", c -> {
-				c.subject(new Stack<Integer>() {{ push(c.get("one")); }});
-
-				c.it("has an element onto top", expect -> expect.that(c.subject().get(0), is(equalTo(c.get("one")))));
-			});
-
-			d.context("when pop the last element", (c) -> {
-				c.subject(new Stack<Integer>() {{ push(c.get("one")); push(c.get("two")); }});
-
-				c.it("element is the last pushed", expect -> expect.that(c.subject().pop(), is(equalTo(c.get("two")))) );
-			});
+	describe(".empty", () -> {
+		context("when create an empty stack", () -> {
+			subject(new Stack<Integer>());
+			it("is empty", () -> expectThat(subject().isEmpty(), is(true)));
 		});
+	});
+
+	describe(".push", () -> {
+		context("when push new element onto top", () -> {
+			subject(new Stack<Integer>() {{ push(spec.get("one")); }});
+			it("has an element onto top", () -> expectThat(subject().get(0), is(equalTo(get("one")))));
+		});
+	});
+
+	describe(".pop", () -> {
+		context("when pop the last element", () -> {
+			subject(new Stack<Integer>() {{
+				push(spec.get("one"));
+				push(spec.get("two"));
+			}});
+			it("element is the last pushed", () -> expectThat(subject().pop(), is(equalTo(get("two")))));
+		});
+	});
 }}

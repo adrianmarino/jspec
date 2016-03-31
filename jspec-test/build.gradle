@@ -1,5 +1,7 @@
 apply plugin: 'ar.com.nonosoft.jspec.spec'
 
+sourceCompatibility = 1.8
+
 dependencies {
 	compile project(':jspec-core')
 }
