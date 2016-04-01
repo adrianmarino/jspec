@@ -7,11 +7,11 @@ import static org.fusesource.jansi.Ansi.Color.YELLOW;
 
 public class Report {
 
-	public void intFailCounter() {
+	public void intFailures() {
 		failures++;
 	}
 
-	public void incErrorCounter() {
+	public void incErrors() {
 		errors++;
 	}
 
@@ -38,12 +38,12 @@ public class Report {
 		Output fail = new Output().capRed(desc).ws().boldRed("FAIL!").ws();
 		errorLines(cause).forEach(line -> fail.boldRed(line).ws());
 		output.var(itId, fail.nl());
-		intFailCounter();
+		intFailures();
 	}
 
 	public void printError(Long itId, String desc, Throwable exception) {
 		output.var(itId, new Output().capRed(desc).ws().boldRed("ERROR!").ws().capRed(exception).nl());
-		incErrorCounter();
+		incErrors();
 	}
 
 	public void addItVar(Long id) {
@@ -67,9 +67,9 @@ public class Report {
 	// --------------------------------------------------------------------------
 
 	private String footer() {
-		return new Output(tests).ws().boldBlue(tests == 1 ? "test" : "tests").boldBlue(",").ws()
+		return new Output().boldBlue(tests).ws().boldBlue(tests == 1 ? "test" : "tests").boldBlue(",").ws()
 					.boldBlue(failures).ws().boldBlue(failures == 1 ? "failure" : "failures").boldBlue(",").ws()
-					.boldBlue(errors).ws().boldBlue(errors == 1 ? "incErrorCounter" : "errors").boldBlue(".").toString();
+					.boldBlue(errors).ws().boldBlue(errors == 1 ? "incErrors" : "errors").boldBlue(".").toString();
 	}
 
 	public void specsNotFound() {
