@@ -9,20 +9,26 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ar.com.nonosoft.jspec.util.ClassUtils.subclassGenericParamOf;
+
 @RunWith(JSpecRunner.class)
 @SuppressWarnings("unchecked")
 public abstract class Specification<SUBJECT> {
 
-	public void describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
-		descriptions.add(new RootDescription<>(clazz.getName(), block, report));
+	public void describe(DescribeBlock<SUBJECT> block) {
+		descriptions.add(new RootDescription<>(subclassGenericParamOf(getClass()).getTypeName(), block, report));
 	}
 
 	public List<It> its() {
-		return descriptions.stream().map(d -> d.its()).reduce(new ArrayList<It>(), (acc,its) -> { acc.addAll(its); return acc; } );
+		return descriptions.stream().map(RootDescription::its)
+				.reduce(new ArrayList<>(), (acc, its) -> {
+					acc.addAll(its);
+					return acc;
+				});
 	}
 
 	public void run(Report anOtherReport) {
-		its().forEach(it->it.run());
+		its().forEach(It::run);
 		anOtherReport.syncWith(report);
 	}
 

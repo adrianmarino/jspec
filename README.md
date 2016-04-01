@@ -39,7 +39,7 @@ Step 1: Describe a specification
 
 ```java
 public class StackSpec extends Specification<Stack> {{
-	describe(Stack.class, d -> {
+	describe(d -> {
 		d.let("one", 1).let("two", 2);
 
 		d.context("when create an empty stack", c -> {
