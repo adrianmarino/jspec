@@ -9,7 +9,7 @@ import static java.lang.String.format;
 import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 
-public class It extends Statement {
+class It extends Statement {
 
 	// --------------------------------------------------------------------------
 	// Public Methods

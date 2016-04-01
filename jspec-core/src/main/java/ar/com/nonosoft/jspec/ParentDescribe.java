@@ -7,7 +7,7 @@ import ar.com.nonosoft.jspec.util.StringUtils;
 
 import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
-public class ParentDescribe<SUBJECT> extends Description<SUBJECT> {
+public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
 
 	public void describe(String desc, VoidBlock block) {
 		new ChildDescribe<SUBJECT>(desc, block, this, report);
@@ -37,12 +37,11 @@ public class ParentDescribe<SUBJECT> extends Description<SUBJECT> {
 	// Constructors
 	// --------------------------------------------------------------------------
 
-
-	public ParentDescribe(Class<SUBJECT> clazz, ParentDescribeBlock<SUBJECT> block, Report report) {
+	ParentDescribe(Class<SUBJECT> clazz, ParentDescribeBlock<SUBJECT> block, Report report) {
 		this(clazz.getName(), block, report);
 	}
 
-	public ParentDescribe(String description, ParentDescribeBlock<SUBJECT> block, Report report) {
+	ParentDescribe(String description, ParentDescribeBlock<SUBJECT> block, Report report) {
 		super(description, report);
 		perform(() -> block.eval(this));
 	}
