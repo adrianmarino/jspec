@@ -3,9 +3,6 @@ package ar.com.nonosoft.jspec;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.component.Component;
 import ar.com.nonosoft.jspec.output.Output;
-import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.component.Component;
-import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.junit.runners.model.Statement;
 

@@ -2,7 +2,6 @@ package ar.com.nonosoft.jspec.component;
 
 import ar.com.nonosoft.jspec.It;
 import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.block.LetBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
 public abstract class Component<COMPONENT, SUBJECT>  {
@@ -21,7 +21,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	// Public Methods
 	// --------------------------------------------------------------------------
 
-	public COMPONENT subject(LetBlock<SUBJECT> block) {
+	public COMPONENT subject(Supplier<SUBJECT> block) {
 		return let(SUBJECT, block);
 	}
 
@@ -30,11 +30,11 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	}
 
 	public SUBJECT subject() {
-		LetBlock block = letLockUp(SUBJECT, new MissingSubjectException());
-		return (SUBJECT) block.eval();
+		Supplier block = letLockUp(SUBJECT, new MissingSubjectException());
+		return (SUBJECT) block.get();
 	}
 
-	public COMPONENT let(String name, LetBlock block) {
+	public COMPONENT let(String name, Supplier block) {
 		letBlocks().put(name, block);
 		return (COMPONENT)this;
 	}
@@ -48,8 +48,8 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	}
 
 	public <T> T get(String name, Class<T> clazz) {
-		LetBlock block = letLockUp(name, new MissingLetException(name));
-		return (T) block.eval();
+		Supplier block = letLockUp(name, new MissingLetException(name));
+		return (T) block.get();
 	}
 
 	public String description() {
@@ -88,7 +88,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	// Protected Methods
 	// --------------------------------------------------------------------------
 
-	protected LetBlock letBlock(String name) {
+	protected Supplier letBlock(String name) {
 		return letBlocks().get(name);
 	}
 
@@ -99,9 +99,9 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	// Private Methods
 	// --------------------------------------------------------------------------
 
-	private LetBlock letLockUp(String name, MissingBlockException exception) {
+	private Supplier letLockUp(String name, MissingBlockException exception) {
 		Component component = this;
-		LetBlock block = null;
+		Supplier block = null;
 		while(component != null && block == null) {
 			block = component.letBlock(name);
 			component = component.parent;
@@ -111,7 +111,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 		return block;
 	}
 
-	private Map<String, LetBlock> letBlocks() {
+	private Map<String, Supplier> letBlocks() {
 		return letBlocks == null ? letBlocks = new HashMap<>() : letBlocks;
 	}
 
@@ -135,7 +135,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 
 	private Component parent;
 
-	private Map<String, LetBlock> letBlocks;
+	private Map<String, Supplier> letBlocks;
 
 	private List<It> its;
 
