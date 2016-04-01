@@ -1,8 +1,8 @@
-package ar.com.nonosoft.jspec.container.describe.impl;
+package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.VoidBlock;
-import ar.com.nonosoft.jspec.container.Container;
-import ar.com.nonosoft.jspec.container.describe.Description;
+import ar.com.nonosoft.jspec.Container;
+import ar.com.nonosoft.jspec.Description;
 import ar.com.nonosoft.jspec.output.report.Report;
 import ar.com.nonosoft.jspec.util.StringUtils;
 

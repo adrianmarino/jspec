@@ -1,6 +1,5 @@
-package ar.com.nonosoft.jspec.container;
+package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.assertion.It;
 import ar.com.nonosoft.jspec.block.BlockExecutor;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
@@ -53,12 +52,24 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 		return (T) block.get();
 	}
 
-	public String description() {
+	public void it(String desc, ItBlock block) {
+		its.add(new It(desc, block, this, report));
+	}
+
+	public String toString() {
+		return description();
+	}
+
+	// --------------------------------------------------------------------------
+	// Package Methods
+	// --------------------------------------------------------------------------
+
+	String description() {
 		return description;
 	}
 
 
-	public void perform(BlockExecutor executor) {
+	void perform(BlockExecutor executor) {
 		printHeader();
 		try {
 			executor.eval();
@@ -69,19 +80,11 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 		printFooter();
 	}
 
-	public String toString() {
-		return description();
-	}
-
-	public void it(String desc, ItBlock block) {
-		its.add(new It(desc, block, this, report));
-	}
-
-	public List<It> its() {
+	List<It> its() {
 		return new ArrayList<It>() {{ addAll(its); children.forEach(child -> addAll(child.its())); }};
 	}
 
-	public void resetLets() {
+	void resetLets() {
 		letBlocks = null;
 	}
 
@@ -96,6 +99,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	protected abstract void printHeader();
 
 	protected abstract void printFooter();
+
 	// --------------------------------------------------------------------------
 	// Private Methods
 	// --------------------------------------------------------------------------

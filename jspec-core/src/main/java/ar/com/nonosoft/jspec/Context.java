@@ -1,6 +1,5 @@
-package ar.com.nonosoft.jspec.container.context;
+package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.container.Container;
 import ar.com.nonosoft.jspec.output.report.Report;
 
 import static ar.com.nonosoft.jspec.util.StringUtils.withFgColor;

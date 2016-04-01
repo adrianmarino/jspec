@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.runner;
+package ar.com.nonosoft.jspec;
 
 import static ar.com.nonosoft.jspec.util.StringUtils.NEWLINE;
 import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;

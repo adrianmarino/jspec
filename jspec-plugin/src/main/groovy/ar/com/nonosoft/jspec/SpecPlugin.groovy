@@ -14,7 +14,7 @@ class SpecPlugin implements Plugin<Project> {
 			project.test.enabled = false
 			project.build.shouldRunAfter project.clean
 
-			main = 'ar.com.nonosoft.jspec.runner.ConsoleRunner'
+			main = 'ar.com.nonosoft.jspec.ConsoleRunner'
 			classpath = project.sourceSets.main.runtimeClasspath
 			classpath += project.sourceSets.test.runtimeClasspath + project.files("${project.projectDir}/test")
 

@@ -1,8 +1,7 @@
-package ar.com.nonosoft.jspec.container.describe.impl;
+package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.VoidBlock;
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
-import ar.com.nonosoft.jspec.container.describe.Description;
 import ar.com.nonosoft.jspec.output.report.Report;
 import ar.com.nonosoft.jspec.util.StringUtils;
 
@@ -14,6 +13,18 @@ public class ParentDescribe<SUBJECT> extends Description<SUBJECT> {
 		new ChildDescribe<SUBJECT>(desc, block, this, report);
 	}
 
+	// --------------------------------------------------------------------------
+	// Package Methods
+	// --------------------------------------------------------------------------
+
+	void run() {
+		its().forEach(it -> it.run());
+	}
+
+	// --------------------------------------------------------------------------
+	// Protected Methods
+	// --------------------------------------------------------------------------
+
 	protected void printFooter() {
 		report.output().endLevel();
 	}
@@ -22,6 +33,11 @@ public class ParentDescribe<SUBJECT> extends Description<SUBJECT> {
 		report.output().println(StringUtils.boldWithFbColor(description(), DEFAULT)).beginLevel();
 	}
 
+	// --------------------------------------------------------------------------
+	// Constructors
+	// --------------------------------------------------------------------------
+
+
 	public ParentDescribe(Class<SUBJECT> clazz, ParentDescribeBlock<SUBJECT> block, Report report) {
 		this(clazz.getName(), block, report);
 	}
@@ -29,9 +45,5 @@ public class ParentDescribe<SUBJECT> extends Description<SUBJECT> {
 	public ParentDescribe(String description, ParentDescribeBlock<SUBJECT> block, Report report) {
 		super(description, report);
 		perform(() -> block.eval(this));
-	}
-
-	public void run() {
-		its().forEach(it->it.run());
 	}
 }

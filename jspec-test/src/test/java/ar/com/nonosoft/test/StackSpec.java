@@ -13,7 +13,6 @@ public class StackSpec extends Spec<Stack> {{
 
 			d.context("when create an empty stack", c -> {
 				c.subject(new Stack<Integer>());
-
 				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
 			});
 

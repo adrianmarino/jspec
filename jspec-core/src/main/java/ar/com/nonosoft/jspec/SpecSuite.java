@@ -1,8 +1,6 @@
-package ar.com.nonosoft.jspec.runner;
+package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.Spec;
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
-import ar.com.nonosoft.jspec.container.describe.impl.ParentDescribe;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.reflections.Reflections;
