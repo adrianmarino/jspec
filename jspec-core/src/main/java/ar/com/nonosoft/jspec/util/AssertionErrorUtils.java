@@ -10,7 +10,7 @@ public class AssertionErrorUtils {
 		List<String> lines= new ArrayList<>();
 		Scanner scanner = new Scanner(error.getMessage());
 		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine().replace("\n", "");
+			String line = scanner.nextLine().replace("\n", "").trim();
 			if (!line.isEmpty()) lines.add(line);
 		}
 		return lines;

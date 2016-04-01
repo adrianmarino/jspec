@@ -1,14 +1,8 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.output.Output;
-import ar.com.nonosoft.jspec.output.report.Report;
-import org.junit.internal.AssumptionViolatedException;
+import ar.com.nonosoft.jspec.output.Report;
 import org.junit.runners.model.Statement;
-
-import static java.lang.String.format;
-import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
 
 class It extends Statement {
 
@@ -18,34 +12,28 @@ class It extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		try {
-			block.eval(new Expect());
-		} catch (AssertionError cause) {
-			throw new AssumptionViolatedException(cause.getMessage());
-		}
+		block.eval(new Expect());
 	}
 
 	public void run() {
-		report.incTestCounter();
 		try {
+			report.incTestCounter();
 			block.eval(new Expect());
 			parent.resetLets();
-			report.output().var(id, new Output().printMessage(capitalize(description), GREEN));
+			report.printSuccess(id, description);
 		} catch (AssertionError cause) {
-			report.output().var(id, new Output().printFail(description, cause));
-			report.intFailCounter();
+			report.printFail(id, description, cause);
 		} catch (Exception exception) {
-			report.output().var(id, new Output().printError(description, exception));
-			report.incErrorCounter();
+			report.printError(id, description, exception);
 		}
 	}
 
-	public String description() {
-		return description;
-	}
+	// --------------------------------------------------------------------------
+	// Package Methods
+	// --------------------------------------------------------------------------
 
-	public String toString() {
-		return format("It %s", description());
+	String description() {
+		return description;
 	}
 
 	// --------------------------------------------------------------------------
@@ -74,7 +62,6 @@ class It extends Statement {
 		this.block = block;
 		this.report = report;
 		this.id = ++counter;
-		this.report.output().var(id);
+		this.report.addItVar(id);
 	}
-
 }

@@ -1,11 +1,7 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.VoidBlock;
-import ar.com.nonosoft.jspec.output.report.Report;
-
-import static ar.com.nonosoft.jspec.util.StringUtils.withFgColor;
-import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.fusesource.jansi.Ansi.Color.DEFAULT;
+import ar.com.nonosoft.jspec.output.Report;
 
 public abstract class Context<SUBJECT> extends Container<Context<SUBJECT>,SUBJECT> {
 
@@ -19,18 +15,6 @@ public abstract class Context<SUBJECT> extends Container<Context<SUBJECT>,SUBJEC
 	 */
 	public void context(String desc, VoidBlock block) {
 		new ChildContext<SUBJECT>(desc, block, this, report);
-	}
-
-	// --------------------------------------------------------------------------
-	// Protected Methods
-	// --------------------------------------------------------------------------
-
-	protected void printHeader() {
-		report.output().println(withFgColor(capitalize(description()), DEFAULT)).beginLevel();
-	}
-
-	protected void printFooter() {
-		report.output().endLevel();
 	}
 
 	// --------------------------------------------------------------------------

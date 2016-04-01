@@ -1,7 +1,7 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.VoidBlock;
-import ar.com.nonosoft.jspec.output.report.Report;
+import ar.com.nonosoft.jspec.output.Report;
 
 public class ChildContext<SUBJECT> extends Context<SUBJECT> {
 

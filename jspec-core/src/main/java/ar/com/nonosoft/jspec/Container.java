@@ -5,13 +5,15 @@ import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
-import ar.com.nonosoft.jspec.output.report.Report;
+import ar.com.nonosoft.jspec.output.Report;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 @SuppressWarnings("unchecked")
 public abstract class Container<COMPONENT, SUBJECT>  {
@@ -97,17 +99,12 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	}
 
 	public String toString() {
-		return description();
+		return description;
 	}
 
 	// --------------------------------------------------------------------------
 	// Package Methods
 	// --------------------------------------------------------------------------
-
-	String description() {
-		return description;
-	}
-
 
 	void perform(BlockExecutor executor) {
 		printHeader();
@@ -116,10 +113,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	}
 
 	List<It> its() {
-		return new ArrayList<It>() {{
-			addAll(its);
-			children.forEach(child -> addAll(child.its()));
-		}};
+		return new ArrayList<It>() {{ addAll(its); children.forEach(child -> addAll(child.its())); }};
 	}
 
 	void resetLets() {
@@ -134,9 +128,13 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 		return letBlocks().get(name);
 	}
 
-	protected abstract void printHeader();
+	protected void printHeader() {
+		report.printHeader(description, DEFAULT);
+	}
 
-	protected abstract void printFooter();
+	protected void printFooter() {
+		report.printFooter();
+	}
 
 	// --------------------------------------------------------------------------
 	// Private Methods

@@ -1,7 +1,9 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
-import ar.com.nonosoft.jspec.output.report.Report;
+import ar.com.nonosoft.jspec.output.Report;
+
+import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
 
@@ -10,7 +12,15 @@ public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
 	// --------------------------------------------------------------------------
 
 	void run() {
-		its().forEach(it -> it.run());
+		its().forEach(It::run);
+	}
+
+	// --------------------------------------------------------------------------
+	// Protected Methods
+	// --------------------------------------------------------------------------
+
+	protected void printHeader() {
+		report.printBoldHeader(description, DEFAULT);
 	}
 
 	// --------------------------------------------------------------------------

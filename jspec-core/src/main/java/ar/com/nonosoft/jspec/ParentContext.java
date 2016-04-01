@@ -1,7 +1,7 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentContextBlock;
-import ar.com.nonosoft.jspec.output.report.Report;
+import ar.com.nonosoft.jspec.output.Report;
 
 public class ParentContext<SUBJECT> extends Context<SUBJECT> {
 

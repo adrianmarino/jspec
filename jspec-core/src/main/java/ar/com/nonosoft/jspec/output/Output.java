@@ -1,15 +1,14 @@
 package ar.com.nonosoft.jspec.output;
 
-import ar.com.nonosoft.jspec.util.AssertionErrorUtils;
 import org.apache.commons.lang.text.StrBuilder;
-import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Color;
 
 import static ar.com.nonosoft.jspec.util.StringUtils.*;
 import static java.lang.String.format;
 import static java.util.stream.IntStream.range;
 import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.apache.commons.lang.StringUtils.repeat;
-import static org.fusesource.jansi.Ansi.Color.RED;
+import static org.fusesource.jansi.Ansi.Color.*;
 
 public class Output {
 
@@ -21,36 +20,94 @@ public class Output {
 		return output.toString();
 	}
 
-	public Output printFail(String desc, AssertionError cause) {
-		print(withFgColor(capitalize(desc), RED)).println(boldWithFbColor(" FAIL!", RED)).beginLevel(level + FAIL_LEVEL);
-		AssertionErrorUtils.errorLines(cause).forEach(line -> printBoldMessage(line, RED));
-		endLevel(level + FAIL_LEVEL);
+	public Output boldln(String message, Color color) {
+		return addln(boldWithFbColor(message, color));
+	}
+
+	public Output boldBlue(String message) {
+		return add(boldWithFbColor(message, BLUE));
+	}
+
+	public Output boldRed(String message) {
+		return add(boldWithFbColor(message, RED));
+	}
+
+	public Output capBold(String message, Color color) {
+		return bold(capitalize(message), color);
+	}
+
+	public Output bold(String message, Color color) {
+		return add(boldWithFbColor(message, color));
+	}
+
+	public Output addCap(Object value, Color color) {
+		return add(capitalize(value.toString()), color);
+	}
+
+	public Output add(Object value, Color color) {
+		return add(withFgColor(value.toString(), color));
+	}
+
+	public Output addln(Object value, Color color) {
+		return addln(withFgColor(value.toString(), color));
+	}
+
+	public Output addln(Object value) {
+		output.append(addPrefix(value.toString())).append(NEWLINE);
 		return this;
 	}
 
-	public Output printError(String description, Exception exception) {
-		return println(new StringBuilder(withFgColor(capitalize(description), RED))
-				.append(boldWithFbColor(" ERROR!", RED))
-				.append(withFgColor(" (Error: ", RED))
-				.append(withFgColor(capitalize(exception.getMessage()), RED))
-				.append(withFgColor(")", RED))
-				.toString());
+	public Output capGreen(Object value) {
+		return green(capitalize(value.toString()));
 	}
 
-	public Output printMessage(String message, Ansi.Color color) {
-		return println(withFgColor(message, color));
+	public Output green(Object value) {
+		return add(value, GREEN);
 	}
 
-	public Output printBoldMessage(String message, Ansi.Color color) {
-		return println(boldWithFbColor(message, color));
+
+	public Output capRed(Object value) {
+		return red(capitalize(value.toString()));
 	}
+
+	public Output red(Object value) {
+		return add(value, RED);
+	}
+
+	public Output addCap(Object value) {
+		return add(capitalize(value.toString()));
+	}
+
+	public Output add(Object value) {
+		output.append(addPrefix(value.toString()));
+		return this;
+	}
+	
+	public Output ws() {
+		return add(WHITESPACE);
+	}
+
+	public Output var(Long var) {
+		return add(format("{%s}", var));
+	}
+
+	public Output var(Long var, Object to) {
+		output.replaceAll(format("{%s}", var), to.toString());
+		return this;
+	}
+
+	public void syncWith(Output anOtherOutput) {
+		anOtherOutput.level = level;
+		output.append(anOtherOutput.output);
+	}
+
 
 	public Output beginLevel() {
 		return beginLevel(1);
 	}
 
 	public Output beginLevel(Integer number) {
-		range(0, number).forEach(num -> level++);
+		range(ZERO, number).forEach(num -> level++);
 		return this;
 	}
 
@@ -59,41 +116,18 @@ public class Output {
 	}
 
 	public Output endLevel(Integer number) {
-		if (level > ZERO) range(0, number).forEach(num -> level--);
+		if (level > ZERO) range(ZERO, number).forEach(num -> level--);
 		return this;
 	}
 
-	public Output newline() {
-		println("");
-		return this;
+	public Output nl(Integer times) {
+		return add(repeat(NEWLINE, times));
 	}
 
-	public Output println(String value) {
-		output.append(addPrefix(value)).append(NEWLINE);
-		return this;
+	public Output nl() {
+		return nl(1);
 	}
 
-	public Output print(String value) {
-		output.append(addPrefix(value));
-		return this;
-	}
-
-	public Output var(Long var) {
-		return print(format("{%s}", var));
-	}
-
-	public Output var(Long var, Output to) {
-		return var(var, to.toString());
-	}
-
-	public Output var(Long var, String to) {
-		output.replaceAll(format("{%s}", var), to);
-		return this;
-	}
-
-	public void syncWith(Output anOtherOutput) {
-		output.append(anOtherOutput);
-	}
 
 	// --------------------------------------------------------------------------
 	// Private Methods
@@ -111,9 +145,6 @@ public class Output {
 
 	public static final String LEVEL = WHITESPACE + WHITESPACE;
 
-
-	public static final int FAIL_LEVEL = 3;
-
 	// --------------------------------------------------------------------------
 	// Attributes
 	// --------------------------------------------------------------------------
@@ -127,11 +158,19 @@ public class Output {
 	// --------------------------------------------------------------------------
 
 	public Output() {
-		this(ZERO);
+		this(ZERO, EMPTY);
+	}
+
+	public Output(String value) {
+		this(ZERO, value);
 	}
 
 	public Output(Integer level) {
+		this(level, EMPTY);
+	}
+
+	public Output(Integer level, String value) {
 		this.level = level;
-		this.output = new StrBuilder();
+		this.output = new StrBuilder(value) ;
 	}
 }

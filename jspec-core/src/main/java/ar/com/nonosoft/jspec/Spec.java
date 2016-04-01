@@ -2,7 +2,7 @@ package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
 import ar.com.nonosoft.jspec.exception.impl.MultipleRootDescriptions;
-import ar.com.nonosoft.jspec.output.report.Report;
+import ar.com.nonosoft.jspec.output.Report;
 import org.junit.runner.RunWith;
 
 import java.util.List;

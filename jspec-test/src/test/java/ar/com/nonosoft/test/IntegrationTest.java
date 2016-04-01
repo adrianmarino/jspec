@@ -25,7 +25,7 @@ public class IntegrationTest {
 			d.context("when create an empty stack", c -> {
 				c.subject(() -> new Stack<Integer>());
 
-				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
+				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(false)));
 			});
 
 			d.context("when push new element onto top", c -> {
