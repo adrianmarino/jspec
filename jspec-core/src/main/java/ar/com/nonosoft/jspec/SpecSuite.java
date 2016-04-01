@@ -1,6 +1,6 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
+import ar.com.nonosoft.jspec.block.DescribeBlock;
 import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.output.report.Report;

@@ -1,6 +1,5 @@
-package ar.com.nonosoft.jspec.block.context;
+package ar.com.nonosoft.jspec.block;
 
-import ar.com.nonosoft.jspec.component.context.impl.RootContext;
 import ar.com.nonosoft.jspec.component.context.impl.RootContext;
 
 public interface ContextBlock<SUBJECT> {

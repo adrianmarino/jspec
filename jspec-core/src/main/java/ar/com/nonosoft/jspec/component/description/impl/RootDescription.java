@@ -1,20 +1,16 @@
 package ar.com.nonosoft.jspec.component.description.impl;
 
-import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
-import ar.com.nonosoft.jspec.block.describe.NestedDescribeBlock;
-import ar.com.nonosoft.jspec.component.description.Description;
-import ar.com.nonosoft.jspec.util.StringUtils;
-import ar.com.nonosoft.jspec.block.describe.DescribeBlock;
-import ar.com.nonosoft.jspec.block.describe.NestedDescribeBlock;
+import ar.com.nonosoft.jspec.block.VoidBlock;
+import ar.com.nonosoft.jspec.block.DescribeBlock;
 import ar.com.nonosoft.jspec.component.description.Description;
 import ar.com.nonosoft.jspec.output.report.Report;
 import ar.com.nonosoft.jspec.util.StringUtils;
 
-import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 
-	public void describe(String desc, NestedDescribeBlock block) {
+	public void describe(String desc, VoidBlock block) {
 		new NestedDescription<SUBJECT>(desc, block, this, report);
 	}
 

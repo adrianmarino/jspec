@@ -1,10 +1,9 @@
 package ar.com.nonosoft.jspec.component.context.impl;
 
 import ar.com.nonosoft.jspec.component.context.Context;
-import ar.com.nonosoft.jspec.block.context.ContextBlock;
-import ar.com.nonosoft.jspec.block.context.NestedContextBlock;
+import ar.com.nonosoft.jspec.block.ContextBlock;
+import ar.com.nonosoft.jspec.block.VoidBlock;
 import ar.com.nonosoft.jspec.component.Component;
-import ar.com.nonosoft.jspec.component.context.Context;
 import ar.com.nonosoft.jspec.output.report.Report;
 
 public class RootContext<SUBJECT> extends Context<SUBJECT> {
@@ -13,7 +12,7 @@ public class RootContext<SUBJECT> extends Context<SUBJECT> {
 		perform(() -> block.eval(this));
 	}
 
-	public void context(String desc, NestedContextBlock block) {
+	public void context(String desc, VoidBlock block) {
 		new NestedContext<SUBJECT>(desc, block, this, report);
 	}
 }
