@@ -3,6 +3,7 @@ package ar.com.nonosoft.jspec;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.report.Report;
+import org.junit.internal.AssumptionViolatedException;
 import org.junit.runners.model.Statement;
 
 import static java.lang.String.format;
@@ -17,7 +18,11 @@ class It extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		block.eval(new Expect());
+		try {
+			block.eval(new Expect());
+		} catch (AssertionError cause) {
+			throw new AssumptionViolatedException(cause.getMessage());
+		}
 	}
 
 	public void run() {

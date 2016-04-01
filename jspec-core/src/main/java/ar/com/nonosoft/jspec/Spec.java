@@ -9,7 +9,6 @@ import java.util.List;
 
 import static ar.com.nonosoft.jspec.util.ClassUtils.subclassGenericParamOf;
 
-
 /**
  * The base class for all JSpec specifications.
  *

@@ -2,7 +2,6 @@ package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.BlockExecutor;
 import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
@@ -35,19 +34,6 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	}
 
 	/**
-	 * Subject is a let with "subject". it's commonly used to assign the object specified (to test).
-	 *
-	 * @param value
-	 *          object to specify (to test).
-	 *
-	 * @return spec
-	 * @see <a href="http://betterspecs.org/#subject">Use subject</a>
-	 */
-	public COMPONENT subject(SUBJECT value) {
-		return subject(() -> value);
-	}
-
-	/**
 	 * Get a subject value
 	 *
 	 * @see <a href="http://betterspecs.org/#subject">Use subject</a>
@@ -71,21 +57,6 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	public COMPONENT let(String name, Supplier block) {
 		letBlocks().put(name, block);
 		return (COMPONENT)this;
-	}
-
-	/**
-	 * Use let when you have to assign a variable. Using let the variable lazy loads only when
-	 * it is used the first time in the test and get cached until that specific test is finished.
-	 *
-	 * @param name
-	 *          variable name
-	 * @param value
-	 *          variable value
-	 * @return spec
-	 * @see <a href="http://betterspecs.org/#let">Use let</a>
-	 */
-	public COMPONENT let(String name, Object value) {
-		return let(name, () -> value);
 	}
 
 	/**
@@ -140,17 +111,15 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 
 	void perform(BlockExecutor executor) {
 		printHeader();
-		try {
-			executor.eval();
-		} catch (JSpecException exception) {
-			report.output().printError(description(), exception);
-			report.incErrorCounter();
-		}
+		executor.eval();
 		printFooter();
 	}
 
 	List<It> its() {
-		return new ArrayList<It>() {{ addAll(its); children.forEach(child -> addAll(child.its())); }};
+		return new ArrayList<It>() {{
+			addAll(its);
+			children.forEach(child -> addAll(child.its()));
+		}};
 	}
 
 	void resetLets() {
@@ -225,7 +194,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 		this.its = new ArrayList<>();
 		this.children = new ArrayList<>();
 		this.description = description;
-		initializeParent(parent);
 		this.report = report;
+		initializeParent(parent);
 	}
 }

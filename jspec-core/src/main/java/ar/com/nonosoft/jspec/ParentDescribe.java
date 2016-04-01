@@ -1,14 +1,9 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
-import ar.com.nonosoft.jspec.block.VoidBlock;
 import ar.com.nonosoft.jspec.output.report.Report;
 
 public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
-
-	public void describe(String desc, VoidBlock block) {
-		new ChildDescribe<SUBJECT>(desc, block, this, report);
-	}
 
 	// --------------------------------------------------------------------------
 	// Package Methods
