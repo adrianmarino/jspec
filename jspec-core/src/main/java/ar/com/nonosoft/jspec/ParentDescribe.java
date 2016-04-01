@@ -1,11 +1,8 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.block.VoidBlock;
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
+import ar.com.nonosoft.jspec.block.VoidBlock;
 import ar.com.nonosoft.jspec.output.report.Report;
-import ar.com.nonosoft.jspec.util.StringUtils;
-
-import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
 
@@ -19,18 +16,6 @@ public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
 
 	void run() {
 		its().forEach(it -> it.run());
-	}
-
-	// --------------------------------------------------------------------------
-	// Protected Methods
-	// --------------------------------------------------------------------------
-
-	protected void printFooter() {
-		report.output().endLevel();
-	}
-
-	protected void printHeader() {
-		report.output().println(StringUtils.boldWithFbColor(description(), DEFAULT)).beginLevel();
 	}
 
 	// --------------------------------------------------------------------------

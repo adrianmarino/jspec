@@ -26,6 +26,6 @@ public class ChildDescribe<SUBJECT> extends Describe<SUBJECT> {
 
 	ChildDescribe(String description, VoidBlock block, Container parent, Report report) {
 		super(description, parent, report);
-		block.eval();
+		perform(() -> block.eval());
 	}
 }
