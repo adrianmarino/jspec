@@ -1,6 +1,5 @@
-package ar.com.nonosoft.jspec.component;
+package ar.com.nonosoft.jspec.block;
 
-import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 
 public interface BlockExecutor {

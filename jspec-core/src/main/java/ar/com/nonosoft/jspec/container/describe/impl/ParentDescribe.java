@@ -1,17 +1,17 @@
-package ar.com.nonosoft.jspec.component.description.impl;
+package ar.com.nonosoft.jspec.container.describe.impl;
 
 import ar.com.nonosoft.jspec.block.VoidBlock;
-import ar.com.nonosoft.jspec.block.DescribeBlock;
-import ar.com.nonosoft.jspec.component.description.Description;
+import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
+import ar.com.nonosoft.jspec.container.describe.Description;
 import ar.com.nonosoft.jspec.output.report.Report;
 import ar.com.nonosoft.jspec.util.StringUtils;
 
 import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
-public class RootDescription<SUBJECT> extends Description<SUBJECT> {
+public class ParentDescribe<SUBJECT> extends Description<SUBJECT> {
 
 	public void describe(String desc, VoidBlock block) {
-		new NestedDescription<SUBJECT>(desc, block, this, report);
+		new ChildDescribe<SUBJECT>(desc, block, this, report);
 	}
 
 	protected void printFooter() {
@@ -22,11 +22,11 @@ public class RootDescription<SUBJECT> extends Description<SUBJECT> {
 		report.output().println(StringUtils.boldWithFbColor(description(), DEFAULT)).beginLevel();
 	}
 
-	public RootDescription(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block, Report report) {
+	public ParentDescribe(Class<SUBJECT> clazz, ParentDescribeBlock<SUBJECT> block, Report report) {
 		this(clazz.getName(), block, report);
 	}
 
-	public RootDescription(String description, DescribeBlock<SUBJECT> block, Report report) {
+	public ParentDescribe(String description, ParentDescribeBlock<SUBJECT> block, Report report) {
 		super(description, report);
 		perform(() -> block.eval(this));
 	}

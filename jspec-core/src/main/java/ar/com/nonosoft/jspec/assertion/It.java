@@ -1,7 +1,7 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.assertion;
 
 import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.component.Component;
+import ar.com.nonosoft.jspec.container.Container;
 import ar.com.nonosoft.jspec.output.Output;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.junit.runners.model.Statement;
@@ -52,7 +52,7 @@ public class It extends Statement {
 
 	private ItBlock block;
 
-	private Component parent;
+	private Container parent;
 
 	private Report report;
 
@@ -64,7 +64,7 @@ public class It extends Statement {
 	// Constructors
 	// --------------------------------------------------------------------------
 
-	public It(String description, ItBlock block, Component parent, Report report) {
+	public It(String description, ItBlock block, Container parent, Report report) {
 		this.description = description;
 		this.parent = parent;
 		this.block = block;

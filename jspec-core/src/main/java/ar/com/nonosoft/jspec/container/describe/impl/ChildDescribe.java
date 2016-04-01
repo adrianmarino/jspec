@@ -1,16 +1,16 @@
-package ar.com.nonosoft.jspec.component.description.impl;
+package ar.com.nonosoft.jspec.container.describe.impl;
 
 import ar.com.nonosoft.jspec.block.VoidBlock;
-import ar.com.nonosoft.jspec.component.Component;
-import ar.com.nonosoft.jspec.component.description.Description;
+import ar.com.nonosoft.jspec.container.Container;
+import ar.com.nonosoft.jspec.container.describe.Description;
 import ar.com.nonosoft.jspec.output.report.Report;
 import ar.com.nonosoft.jspec.util.StringUtils;
 
 import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
-public class NestedDescription<SUBJECT> extends Description<SUBJECT> {
+public class ChildDescribe<SUBJECT> extends Description<SUBJECT> {
 
-	public NestedDescription(String description, VoidBlock block, Component parent, Report report) {
+	public ChildDescribe(String description, VoidBlock block, Container parent, Report report) {
 		super(description, parent, report);
 		block.eval();
 	}

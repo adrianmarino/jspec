@@ -1,7 +1,8 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.runner;
 
-import ar.com.nonosoft.jspec.block.DescribeBlock;
-import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
+import ar.com.nonosoft.jspec.Spec;
+import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
+import ar.com.nonosoft.jspec.container.describe.impl.ParentDescribe;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.output.report.Report;
 import org.reflections.Reflections;
@@ -30,8 +31,8 @@ public class SpecSuite {
 		return this;
 	}
 
-	public <SUBJECT> SpecSuite describe(Class<SUBJECT> clazz, DescribeBlock<SUBJECT> block) {
-		descriptions.add(new RootDescription<>(clazz.getName(), block, report));
+	public <SUBJECT> SpecSuite describe(Class<SUBJECT> clazz, ParentDescribeBlock<SUBJECT> block) {
+		descriptions.add(new ParentDescribe<>(clazz.getName(), block, report));
 		return this;
 	}
 
@@ -40,7 +41,7 @@ public class SpecSuite {
 			report.specsNotFound();
 		else {
 			runSpecifications();
-			descriptions.forEach(RootDescription::run);
+			descriptions.forEach(ParentDescribe::run);
 		}
 		return report.toString();
 	}
@@ -69,7 +70,7 @@ public class SpecSuite {
 
 	private List<Class<Spec<?>>> specifications;
 
-	private List<RootDescription> descriptions;
+	private List<ParentDescribe> descriptions;
 
 	private Report report;
 

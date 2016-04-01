@@ -1,7 +1,5 @@
 package ar.com.nonosoft.jspec.runner;
 
-import ar.com.nonosoft.jspec.SpecSuite;
-
 import static ar.com.nonosoft.jspec.util.StringUtils.NEWLINE;
 import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
 import static java.lang.System.out;

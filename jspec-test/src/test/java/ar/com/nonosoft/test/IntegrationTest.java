@@ -1,9 +1,10 @@
 package ar.com.nonosoft.test;
 
-import ar.com.nonosoft.jspec.SpecSuite;
+import ar.com.nonosoft.jspec.runner.SpecSuite;
 
 import java.util.Stack;
 
+import static java.lang.System.out;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -14,7 +15,7 @@ public class IntegrationTest {
 		suite.addSpec(StackSpec.class);
 		suite.addSpecsIn(PACKAGE);
 		addStackSpec(suite);
-		System.out.println(suite.run());
+		out.println(suite.run());
 	}
 
 	private static SpecSuite addStackSpec(SpecSuite suite) {

@@ -1,6 +1,7 @@
-package ar.com.nonosoft.jspec.component;
+package ar.com.nonosoft.jspec.container;
 
-import ar.com.nonosoft.jspec.It;
+import ar.com.nonosoft.jspec.assertion.It;
+import ar.com.nonosoft.jspec.block.BlockExecutor;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.MissingBlockException;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
-public abstract class Component<COMPONENT, SUBJECT>  {
+public abstract class Container<COMPONENT, SUBJECT>  {
 
 	// --------------------------------------------------------------------------
 	// Public Methods
@@ -100,7 +101,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	// --------------------------------------------------------------------------
 
 	private Supplier letLockUp(String name, MissingBlockException exception) {
-		Component component = this;
+		Container component = this;
 		Supplier block = null;
 		while(component != null && block == null) {
 			block = component.letBlock(name);
@@ -115,7 +116,7 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 		return letBlocks == null ? letBlocks = new HashMap<>() : letBlocks;
 	}
 
-	private void initializeParent(Component parent) {
+	private void initializeParent(Container parent) {
 		this.parent = parent;
 		if(parent != null) parent.children.add(this);
 	}
@@ -131,9 +132,9 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 
 	protected String description;
 
-	protected List<Component> children;
+	protected List<Container> children;
 
-	private Component parent;
+	private Container parent;
 
 	private Map<String, Supplier> letBlocks;
 
@@ -143,11 +144,11 @@ public abstract class Component<COMPONENT, SUBJECT>  {
 	// Constructors
 	// --------------------------------------------------------------------------
 
-	public Component(String description, Report report) {
+	public Container(String description, Report report) {
 		this(description, null, report);
 	}
 
-	public Component(String description, Component parent, Report report) {
+	public Container(String description, Container parent, Report report) {
 		this.its = new ArrayList<>();
 		this.children = new ArrayList<>();
 		this.description = description;

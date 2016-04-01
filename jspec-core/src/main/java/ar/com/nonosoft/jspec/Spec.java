@@ -1,7 +1,8 @@
 package ar.com.nonosoft.jspec;
 
-import ar.com.nonosoft.jspec.block.DescribeBlock;
-import ar.com.nonosoft.jspec.component.description.impl.RootDescription;
+import ar.com.nonosoft.jspec.assertion.It;
+import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
+import ar.com.nonosoft.jspec.container.describe.impl.ParentDescribe;
 import ar.com.nonosoft.jspec.output.report.Report;
 import ar.com.nonosoft.jspec.runner.JSpecRunner;
 import org.junit.runner.RunWith;
@@ -15,12 +16,12 @@ import static ar.com.nonosoft.jspec.util.ClassUtils.subclassGenericParamOf;
 @SuppressWarnings("unchecked")
 public abstract class Spec<SUBJECT> {
 
-	public void describe(DescribeBlock<SUBJECT> block) {
-		descriptions.add(new RootDescription<>(subclassGenericParamOf(getClass()).getTypeName(), block, report));
+	public void describe(ParentDescribeBlock<SUBJECT> block) {
+		descriptions.add(new ParentDescribe<>(subclassGenericParamOf(getClass()).getTypeName(), block, report));
 	}
 
 	public List<It> its() {
-		return descriptions.stream().map(RootDescription::its)
+		return descriptions.stream().map(ParentDescribe::its)
 				.reduce(new ArrayList<>(), (acc, its) -> {
 					acc.addAll(its);
 					return acc;
@@ -34,7 +35,7 @@ public abstract class Spec<SUBJECT> {
 
 	private Report report;
 
-	private List<RootDescription> descriptions;
+	private List<ParentDescribe> descriptions;
 
 	public Spec() {
 		descriptions = new ArrayList<>();

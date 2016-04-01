@@ -1,6 +1,6 @@
 package ar.com.nonosoft.jspec.runner;
 
-import ar.com.nonosoft.jspec.It;
+import ar.com.nonosoft.jspec.assertion.It;
 import ar.com.nonosoft.jspec.Spec;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import org.junit.runner.Description;
