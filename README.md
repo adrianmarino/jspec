@@ -60,7 +60,7 @@ public class StackSpec extends Spec<Stack> {{
 			c.subject(new Stack<Integer>() {{ push(c.get("one")); push(c.get("two")); }});
 
 			c.it("element is the last pushed", expect -> {
-				expect.that(c.subject().pop(), is(equalTo(c.get("two"))))
+				expect.that(c.subject().pop(), is(equalTo(c.get("two"))));
 			});
 		});
 	});
