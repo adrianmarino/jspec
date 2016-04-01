@@ -33,7 +33,7 @@ public class Report {
 	}
 
 	public String toString() {
-		return output.newline().endLevel().println(footer()).toString();
+		return output.newline().println(footer()).toString();
 	}
 
 	// --------------------------------------------------------------------------
@@ -76,6 +76,6 @@ public class Report {
 
 	public Report() {
 		failures = errors = tests = 0;
-		output = new Output().beginLevel();
+		output = new Output();
 	}
 }
