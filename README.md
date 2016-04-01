@@ -38,7 +38,7 @@ gradle -q spec
 Step 1: Describe a specification
 
 ```java
-public class StackSpec extends Specification<Stack> {{
+public class StackSpec extends Spec<Stack> {{
 	describe(d -> {
 		d.let("one", 1).let("two", 2);
 

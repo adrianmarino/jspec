@@ -1,7 +1,7 @@
 package ar.com.nonosoft.jspec.runner;
 
 import ar.com.nonosoft.jspec.It;
-import ar.com.nonosoft.jspec.Specification;
+import ar.com.nonosoft.jspec.Spec;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -36,11 +36,11 @@ public class JSpecRunner extends ParentRunner<It> {
 	// Private Methods
 	// --------------------------------------------------------------------------
 
-	private Class<Specification> getSpecClass() {
-		return (Class<Specification>) getTestClass().getJavaClass();
+	private Class<Spec> getSpecClass() {
+		return (Class<Spec>) getTestClass().getJavaClass();
 	}
 
-	private Specification newInstanceOf(Class<Specification> specClass) {
+	private Spec newInstanceOf(Class<Spec> specClass) {
 		try {
 			return specClass.newInstance();
 		} catch (Exception e) {

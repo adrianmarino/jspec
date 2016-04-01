@@ -19,14 +19,14 @@ public class SpecSuite {
 
 	public SpecSuite addSpecsIn(String packageName) {
 		Reflections reflections = new Reflections(packageName);
-		Iterator<Class<? extends Specification>> iterator = reflections.getSubTypesOf(Specification.class).iterator();
+		Iterator<Class<? extends Spec>> iterator = reflections.getSubTypesOf(Spec.class).iterator();
 		while(iterator.hasNext())
-			specifications.add((Class<Specification<?>>) iterator.next());
+			specifications.add((Class<Spec<?>>) iterator.next());
 		return this;
 	}
 
-	public <SPEC extends Specification<?>> SpecSuite addSpec(Class<SPEC> specification) {
-		specifications.add((Class<Specification<?>>) specification);
+	public <SPEC extends Spec<?>> SpecSuite addSpec(Class<SPEC> specification) {
+		specifications.add((Class<Spec<?>>) specification);
 		return this;
 	}
 
@@ -54,7 +54,7 @@ public class SpecSuite {
 	}
 
 	private void runSpecifications() {
-		for(Class<Specification<?>> specification : specifications) {
+		for(Class<Spec<?>> specification : specifications) {
 			try {
 				specification.newInstance().run(report);
 			} catch (Exception e) {
@@ -67,7 +67,7 @@ public class SpecSuite {
 	// Attributes
 	// --------------------------------------------------------------------------
 
-	private List<Class<Specification<?>>> specifications;
+	private List<Class<Spec<?>>> specifications;
 
 	private List<RootDescription> descriptions;
 

@@ -13,7 +13,7 @@ import static ar.com.nonosoft.jspec.util.ClassUtils.subclassGenericParamOf;
 
 @RunWith(JSpecRunner.class)
 @SuppressWarnings("unchecked")
-public abstract class Specification<SUBJECT> {
+public abstract class Spec<SUBJECT> {
 
 	public void describe(DescribeBlock<SUBJECT> block) {
 		descriptions.add(new RootDescription<>(subclassGenericParamOf(getClass()).getTypeName(), block, report));
@@ -36,7 +36,7 @@ public abstract class Specification<SUBJECT> {
 
 	private List<RootDescription> descriptions;
 
-	public Specification() {
+	public Spec() {
 		descriptions = new ArrayList<>();
 		report = new Report();
 	}
