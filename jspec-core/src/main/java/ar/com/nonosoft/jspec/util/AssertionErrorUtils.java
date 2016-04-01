@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class AssertionErrorUtils {
 
-	public static List<String> errorLines(AssertionError error) {
+	public static List<String> errorLines(Throwable error) {
 		List<String> lines= new ArrayList<>();
 		Scanner scanner = new Scanner(error.getMessage());
 		while (scanner.hasNextLine()) {

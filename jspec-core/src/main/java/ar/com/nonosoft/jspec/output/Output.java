@@ -20,24 +20,24 @@ public class Output {
 		return output.toString();
 	}
 
-	public Output boldln(String message, Color color) {
-		return addln(boldWithFbColor(message, color));
+	public Output boldln(Object value, Color color) {
+		return addln(boldWithFbColor(value.toString(), color));
 	}
 
-	public Output boldBlue(String message) {
-		return add(boldWithFbColor(message, BLUE));
+	public Output boldBlue(Object value) {
+		return add(boldWithFbColor(value.toString(), BLUE));
 	}
 
-	public Output boldRed(String message) {
-		return add(boldWithFbColor(message, RED));
+	public Output boldRed(Object value) {
+		return add(boldWithFbColor(value.toString(), RED));
 	}
 
-	public Output capBold(String message, Color color) {
-		return bold(capitalize(message), color);
+	public Output capBold(Object value, Color color) {
+		return bold(capitalize(value.toString()), color);
 	}
 
-	public Output bold(String message, Color color) {
-		return add(boldWithFbColor(message, color));
+	public Output bold(Object value, Color color) {
+		return add(boldWithFbColor(value.toString(), color));
 	}
 
 	public Output addCap(Object value, Color color) {
@@ -161,7 +161,7 @@ public class Output {
 		this(ZERO, EMPTY);
 	}
 
-	public Output(String value) {
+	public Output(Object value) {
 		this(ZERO, value);
 	}
 
@@ -169,8 +169,8 @@ public class Output {
 		this(level, EMPTY);
 	}
 
-	public Output(Integer level, String value) {
+	public Output(Integer level, Object value) {
 		this.level = level;
-		this.output = new StrBuilder(value) ;
+		this.output = new StrBuilder(value.toString()) ;
 	}
 }

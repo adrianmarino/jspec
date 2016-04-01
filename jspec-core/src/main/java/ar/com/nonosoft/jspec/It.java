@@ -4,6 +4,8 @@ import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.output.Report;
 import org.junit.runners.model.Statement;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 class It extends Statement {
 
 	// --------------------------------------------------------------------------
@@ -50,7 +52,7 @@ class It extends Statement {
 
 	private Long id;
 
-	private static transient long counter = 0;
+	private static AtomicLong counter = new AtomicLong(0);
 
 	// --------------------------------------------------------------------------
 	// Constructors
@@ -61,7 +63,7 @@ class It extends Statement {
 		this.parent = parent;
 		this.block = block;
 		this.report = report;
-		this.id = ++counter;
+		this.id = counter.incrementAndGet();
 		this.report.addItVar(id);
 	}
 }

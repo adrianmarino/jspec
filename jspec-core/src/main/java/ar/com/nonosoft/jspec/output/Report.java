@@ -3,9 +3,6 @@ package ar.com.nonosoft.jspec.output;
 import org.fusesource.jansi.Ansi.Color;
 
 import static ar.com.nonosoft.jspec.util.AssertionErrorUtils.errorLines;
-import static ar.com.nonosoft.jspec.util.StringUtils.boldWithFbColor;
-import static java.lang.String.valueOf;
-import static org.fusesource.jansi.Ansi.Color.BLUE;
 import static org.fusesource.jansi.Ansi.Color.YELLOW;
 
 public class Report {
@@ -37,18 +34,15 @@ public class Report {
 		output.var(itId, new Output().capGreen(desc).nl());
 	}
 
-	public void printFail(Long itId, String desc, AssertionError cause) {
+	public void printFail(Long itId, String desc, Throwable cause) {
 		Output fail = new Output().capRed(desc).ws().boldRed("FAIL!").ws();
 		errorLines(cause).forEach(line -> fail.boldRed(line).ws());
 		output.var(itId, fail.nl());
 		intFailCounter();
 	}
 
-	public void printError(Long itId, String desc, Exception exception) {
-		output.var(
-				itId,
-				new Output().capRed(desc).ws().boldRed("ERROR!").ws().capRed(exception.getMessage()).nl()
-		);
+	public void printError(Long itId, String desc, Throwable exception) {
+		output.var(itId, new Output().capRed(desc).ws().boldRed("ERROR!").ws().capRed(exception).nl());
 		incErrorCounter();
 	}
 
@@ -73,18 +67,9 @@ public class Report {
 	// --------------------------------------------------------------------------
 
 	private String footer() {
-		return boldWithFbColor(
-				new Output(valueOf(tests)).ws()
-						.add(tests == 1 ? "test" : "tests")
-						.add(",").ws()
-						.add(valueOf(failures)).ws()
-						.add(failures == 1 ? "failure" : "failures")
-						.add(",").ws()
-						.add(errors).ws()
-						.add(errors == 1 ? "incErrorCounter" : "errors")
-						.add(".").toString(),
-				BLUE
-		);
+		return new Output(tests).ws().boldBlue(tests == 1 ? "test" : "tests").boldBlue(",").ws()
+					.boldBlue(failures).ws().boldBlue(failures == 1 ? "failure" : "failures").boldBlue(",").ws()
+					.boldBlue(errors).ws().boldBlue(errors == 1 ? "incErrorCounter" : "errors").boldBlue(".").toString();
 	}
 
 	public void specsNotFound() {
