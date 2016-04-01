@@ -78,27 +78,4 @@ Step 2: Run tests
 * Spring context integration.
 * Spec maven plugin.
 * xit.
-* An alternative syntax like this:
-```java
-public class StackSpec extends Specification<Stack> {{
-    describe(Stack.class, () -> {
-      let("one", 1).let("two", 2);
 
-      context("when create an empty stack", () -> {
-        it("is empty", expect -> expect.that(subject().isEmpty(), is(true)));
-      );
-
-      context("when push new element onto top", () -> {
-        subject(new Stack<Integer>() {{ push(get("one")); }});
-
-        it("has an element onto top", () -> expect(subject().get(0), is(equalTo(get("one")))));
-      });
-
-      context("when pop the last element", () -> {
-        subject(new Stack<Integer>() {{ push(get("one")); push(get("two")); }});
-
-        it("element is the last pushed", () -> expect(c.subject().pop(), is(equalTo(c.get("two")))));
-      });
-    });
-}}
-```
