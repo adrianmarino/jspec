@@ -1,0 +1,3 @@
+rootProject.name = 'jspec-plugin'
+
+include 'jspec-core'

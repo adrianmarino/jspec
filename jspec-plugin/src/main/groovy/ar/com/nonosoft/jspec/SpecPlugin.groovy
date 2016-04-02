@@ -6,7 +6,7 @@ import org.gradle.api.tasks.JavaExec
 
 class SpecPlugin implements Plugin<Project> {
 	void apply(Project project) {
-		project.task('spec', type: JavaExec) {
+		project.task('jspec', type: JavaExec) {
 			description 'Run all test classes that inherit of Spectation abstract class'
 
 			dependsOn project.clean

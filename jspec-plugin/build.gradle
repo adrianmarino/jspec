@@ -5,6 +5,7 @@ apply plugin: "maven"
 apply plugin: 'groovy'
 
 dependencies {
+    compile project(':jspec-core')
     compile gradleApi()
     compile localGroovy()
 }
