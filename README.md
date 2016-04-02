@@ -28,7 +28,7 @@ git clone https://github.com/adrianmarino/jspec.git
 
 **Step 2:** Install jspec core & gradle plugin to local maven repository.
 ```bash
-gradle clean install -PexcludeTest; gradle build
+gradle clean install -PexcludeTest
 ```
 
 **Step 3:** Run sample _StackSpec_ to check that all it working.
