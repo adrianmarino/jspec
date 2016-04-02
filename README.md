@@ -42,6 +42,8 @@ You should view the next output:
 
 ### Use
 
+## From gradle
+
 **Step 1:** Add plugin to build.gradle.
 ```groovy
 apply plugin: 'jspec'
@@ -103,6 +105,12 @@ Also could run specs in a particular package.
 ```bash
 gradle -q jspec -Ppkg=ar.com.nonosoft.test
 ```
+
+
+## Speficication Guide
+
+ _Coming soon!_ (<a href="http://betterspecs.org">Better Specs documentation</a>).
+
 
 ### TODO
 
