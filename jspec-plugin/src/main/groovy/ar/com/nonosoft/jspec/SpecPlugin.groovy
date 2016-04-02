@@ -18,7 +18,7 @@ class SpecPlugin implements Plugin<Project> {
 			classpath = project.sourceSets.main.runtimeClasspath
 			classpath += project.sourceSets.test.runtimeClasspath + project.files("${project.projectDir}/test")
 
-			if (project.hasProperty("packageName")) args project.packageName
+			if (project.hasProperty("pkg")) args project.pkg
 		}
 	}
 }

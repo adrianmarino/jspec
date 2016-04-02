@@ -101,7 +101,7 @@ gradle -q jspec
 
 Also could run specs in a particular package.
 ```bash
-gradle -q jspec -Ppck=ar.nonosoft.test
+gradle -q jspec -Ppkg=ar.com.nonosoft.test
 ```
 
 ### TODO
