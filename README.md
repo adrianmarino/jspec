@@ -17,25 +17,47 @@ An RSpec like micro framework for java language.
 
 * **jspec-core**: The jspec framework.
 * **jspec-plugin**: The spec gradle plugin. This allow run tests from console.
-
+* **jspec-test**: A sample test module.
 
 ### Install
 
-Install jspec-plugin/code in local maven repository
-
+**Step 1:** Clone the project.
 ```bash
-gradle clean install -PexcludeTest
+git clone https://github.com/adrianmarino/jspec.git
 ```
 
-### Test
+**Step 2:** Install jspec core & gradle plugin to local maven repository.
+```bash
+gradle clean install -PexcludeTest; gradle build
+```
 
+**Step 3:** Run sample _StackSpec_ to check that all it working.
 ```bash
 gradle -q jspec
 ```
+You should view the next output:
+
+![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
+
 
 ### Use
 
-Step 1: Describe a specification
+**Step 1:** Add plugin to build.gradle.
+```groovy
+apply plugin: 'jspec'
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'ar.com.nonosoft:jspec-plugin:0.0.1'
+	}
+}
+```
+
+**Step 2:** Describe a spec.
 
 ```java
 public class StackSpec extends Spec<Stack> {{
@@ -72,10 +94,15 @@ public class StackSpec extends Spec<Stack> {{
 }}
 ```
 
-Step 2: Run tests
+**Step 3:** Run all specs.
+```bash
+gradle -q jspec
+```
 
-![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
-
+Also could run specs in a particular package.
+```bash
+gradle -q jspec -Ppck=ar.nonosoft.test
+```
 
 ### TODO
 
