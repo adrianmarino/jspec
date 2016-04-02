@@ -106,9 +106,15 @@ Also could run specs in a particular package.
 gradle -q jspec -Ppkg=ar.com.nonosoft.test
 ```
 
-**Step 4:** Run from JIdea.
+**Step 4:** Run from:
+
+JIdea
 
 ![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/idea.png)
+
+Eclipse
+
+![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/eclipse.png)
 
 
 ## Speficication Guide

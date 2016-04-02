@@ -2,6 +2,7 @@ apply plugin: 'jspec'
 
 dependencies {
 	compile project(':jspec-core')
+	testCompile 'org.springframework:spring-test:4.2.5.RELEASE'
 }
 
 buildscript {
