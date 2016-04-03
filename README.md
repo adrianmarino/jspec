@@ -3,7 +3,7 @@
 
 # JSpec
 
-An RSpec like micro framework for java language.
+An RSpec like micro framework for java language (**Still under construction!**).
 
 ### Features
 
@@ -11,7 +11,6 @@ An RSpec like micro framework for java language.
 * Run a JSpec specification as a JUnit test from your favorite IDE (Idea/Eclipse/Netbeans).
 * Run tests with gradle as "rspec --format=doc" way.
 * Use hamcrest assetions.
-* **Still under construction!**
 
 ### Modules
 
