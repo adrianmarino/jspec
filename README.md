@@ -1,6 +1,5 @@
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
 
-
 # JSpec
 
 An RSpec like micro framework for java language.

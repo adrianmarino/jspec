@@ -8,7 +8,7 @@ import static java.lang.System.out;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-public class IntegrationTest {
+public class TestSuite {
 
 	public static void main(String[] args) {
 		SpecSuite suite = new SpecSuite();

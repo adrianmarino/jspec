@@ -1,4 +1,4 @@
-package ar.com.nonosoft.jspec.exception.impl;
+package ar.com.nonosoft.jspec.exception.missing.block.impl;
 
 import ar.com.nonosoft.jspec.exception.JSpecException;
 

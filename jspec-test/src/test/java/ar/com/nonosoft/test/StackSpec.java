@@ -37,5 +37,10 @@ public class StackSpec extends Spec<Stack> {{
 				});
 			});
 		});
+
+		d.describe("when usea a spring context", ()-> {
+			d.context(SampleContext.class);
+			d.it("has a hello string", expect -> expect.that(d.bean("testString"), is(equalTo("Hello"))));
+		});
 	});
 }}

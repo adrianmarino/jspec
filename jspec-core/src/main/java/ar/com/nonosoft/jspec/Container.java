@@ -2,9 +2,11 @@ package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.BlockExecutor;
 import ar.com.nonosoft.jspec.block.ItBlock;
-import ar.com.nonosoft.jspec.exception.MissingBlockException;
-import ar.com.nonosoft.jspec.exception.impl.MissingLetException;
-import ar.com.nonosoft.jspec.exception.impl.MissingSubjectException;
+import ar.com.nonosoft.jspec.context.SpringContext;
+import ar.com.nonosoft.jspec.exception.missing.MissingSpringContext;
+import ar.com.nonosoft.jspec.exception.missing.block.MissingBlockException;
+import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingLet;
+import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingSubject;
 import ar.com.nonosoft.jspec.output.Report;
 
 import java.util.ArrayList;
@@ -21,6 +23,14 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	// --------------------------------------------------------------------------
 	// Public Methods
 	// --------------------------------------------------------------------------
+
+	public <T> T bean(String name) {
+		return (T) context().bean(name);
+	}
+
+	public void context(Class contextClass) {
+		context = new SpringContext(contextClass);
+	}
 
 	/**
 	 * Subject is a let with "subject". it's commonly used to assign the object specified (to test).
@@ -41,7 +51,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	 * @see <a href="http://betterspecs.org/#subject">Use subject</a>
 	 */
 	public SUBJECT subject() {
-		Supplier block = letLockUp(SUBJECT, new MissingSubjectException());
+		Supplier block = letLockUp(SUBJECT, new MissingSubject());
 		return (SUBJECT) block.get();
 	}
 
@@ -84,7 +94,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	 * @see <a href="http://betterspecs.org/#let">Use let</a>
 	 */
 	public <T> T get(String name, Class<T> clazz) {
-		Supplier block = letLockUp(name, new MissingLetException(name));
+		Supplier block = letLockUp(name, new MissingLet(name));
 		return (T) block.get();
 	}
 
@@ -161,6 +171,21 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 		if(parent != null) parent.children.add(this);
 	}
 
+	private SpringContext context() {
+		if(context != null) return context;
+
+		Container component = this;
+		SpringContext result = null;
+		while(component != null && result == null) {
+			result = component.context;
+			component = component.parent;
+		}
+
+		if (result == null) throw new MissingSpringContext();
+		context = result;
+		return result;
+	}
+
 
 	// --------------------------------------------------------------------------
 	// Attributes
@@ -179,6 +204,8 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	private Map<String, Supplier> letBlocks;
 
 	private List<It> its;
+
+	private SpringContext context;
 
 	// --------------------------------------------------------------------------
 	// Constructors

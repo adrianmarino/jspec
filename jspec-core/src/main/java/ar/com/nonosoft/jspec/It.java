@@ -23,10 +23,10 @@ class It extends Statement {
 			block.eval(new Expect());
 			parent.resetLets();
 			report.printSuccess(id, description);
-		} catch (AssertionError cause) {
-			report.printFail(id, description, cause);
-		} catch (Exception exception) {
-			report.printError(id, description, exception);
+		} catch (AssertionError e) {
+			report.printFail(id, description, e);
+		} catch (Exception e) {
+			report.printError(id, description, e);
 		}
 	}
 
