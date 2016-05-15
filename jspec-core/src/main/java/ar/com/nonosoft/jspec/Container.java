@@ -155,10 +155,6 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 		return new ArrayList<It>() {{ addAll(its); children.forEach(child -> addAll(child.its())); }};
 	}
 
-	void resetLets() {
-		letBlocks = null;
-	}
-
 	// --------------------------------------------------------------------------
 	// Protected Methods
 	// --------------------------------------------------------------------------
