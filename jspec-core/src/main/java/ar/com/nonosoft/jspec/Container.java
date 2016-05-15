@@ -3,10 +3,10 @@ package ar.com.nonosoft.jspec;
 import ar.com.nonosoft.jspec.block.BlockExecutor;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.context.SpringContext;
-import ar.com.nonosoft.jspec.exception.missing.MissingSpringContext;
+import ar.com.nonosoft.jspec.exception.missing.MissingSpringContextException;
 import ar.com.nonosoft.jspec.exception.missing.block.MissingBlockException;
-import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingLet;
-import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingSubject;
+import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingLetException;
+import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingSubjectException;
 import ar.com.nonosoft.jspec.output.Report;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	 * @see <a href="http://betterspecs.org/#subject">Use subject</a>
 	 */
 	public SUBJECT subject() {
-		Supplier block = letLockUp(SUBJECT, new MissingSubject());
+		Supplier block = letLockUp(SUBJECT, new MissingSubjectException());
 		return (SUBJECT) block.get();
 	}
 
@@ -123,7 +123,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	 * @see <a href="http://betterspecs.org/#let">Use let</a>
 	 */
 	public <T> T get(String name, Class<T> clazz) {
-		Supplier block = letLockUp(name, new MissingLet(name));
+		Supplier block = letLockUp(name, new MissingLetException(name));
 		return (T) block.get();
 	}
 
@@ -210,7 +210,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 			component = component.parent;
 		}
 
-		if (result == null) throw new MissingSpringContext();
+		if (result == null) throw new MissingSpringContextException();
 		context = result;
 		return result;
 	}

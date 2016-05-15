@@ -2,7 +2,7 @@ package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
-import ar.com.nonosoft.jspec.exception.missing.block.impl.MultipleRootDescriptions;
+import ar.com.nonosoft.jspec.exception.missing.block.impl.MultipleRootDescriptionsException;
 import ar.com.nonosoft.jspec.output.Report;
 import ar.com.nonosoft.jspec.util.ClassUtils;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ public abstract class Spec<SUBJECT> {
 	 * Is the main block on a specification description. Use only on root description by spec.
 	 */
 	public void describe(ParentDescribeBlock<SUBJECT> block) {
-		if (description != null) throw new MultipleRootDescriptions(getClass());
+		if (description != null) throw new MultipleRootDescriptionsException(getClass());
 		description = newRootDescription(block);
 	}
 

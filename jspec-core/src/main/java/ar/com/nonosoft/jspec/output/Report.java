@@ -42,7 +42,7 @@ public class Report {
 	}
 
 	public void printError(Long itId, String desc, Throwable exception) {
-		output.var(itId, new Output().capRed(desc).ws().boldRed("ERROR!").ws().capRed(exception).nl());
+		output.var(itId, new Output().capRed(desc).ws().boldRed("ERROR!").ws().capRed(exception.getMessage()).nl());
 		incErrors();
 	}
 

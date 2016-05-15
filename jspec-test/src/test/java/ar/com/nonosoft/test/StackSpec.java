@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class StackSpec extends Spec<Stack> {{
 	describe(d -> {
-		d.let("one", 1).let("two", 2);
+		d.let("one", ()-> 1).let("two", ()-> 2);
 
 		d.describe(".new", ()-> {
 			d.context("when create an empty stack", c -> {
@@ -36,7 +36,7 @@ public class StackSpec extends Spec<Stack> {{
 			});
 		});
 
-		d.describe("when usea a spring context", ()-> {
+		d.describe("when use an spring context", ()-> {
 			d.context(SampleContext.class);
 			d.it("has a hello string", expect -> expect.that(d.bean("testString"), is(equalTo("Hello"))));
 		});
