@@ -46,6 +46,19 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	}
 
 	/**
+	 * Subject is a let with "subject". it's commonly used to assign the object specified (to test).
+	 *
+	 * @param subject
+	 *        object to specify (to test).
+	 *
+	 * @return spec
+	 * @see <a href="http://betterspecs.org/#subject">Use subject</a>
+	 */
+	public COMPONENT subject(SUBJECT subject) {
+		return let(SUBJECT, subject);
+	}
+
+	/**
 	 * Get a subject value
 	 *
 	 * @see <a href="http://betterspecs.org/#subject">Use subject</a>
@@ -68,6 +81,22 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	 */
 	public COMPONENT let(String name, Supplier block) {
 		letBlocks().put(name, block);
+		return (COMPONENT)this;
+	}
+
+	/**
+	 * Use let when you have to assign a variable. Using let the variable lazy loads only when
+	 * it is used the first time in the test and get cached until that specific test is finished.
+	 *
+	 * @param name
+	 *          variable name
+	 * @param value
+	 *          variable value
+	 * @return spec
+	 * @see <a href="http://betterspecs.org/#let">Use let</a>
+	 */
+	public COMPONENT let(String name, Object value) {
+		letBlocks().put(name, () -> value);
 		return (COMPONENT)this;
 	}
 
