@@ -3,10 +3,11 @@ package ar.com.nonosoft.jspec;
 import ar.com.nonosoft.jspec.block.BlockExecutor;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.context.SpringContext;
-import ar.com.nonosoft.jspec.exception.missing.MissingSpringContextException;
+import ar.com.nonosoft.jspec.exception.missing.context.MissingSpringContextException;
 import ar.com.nonosoft.jspec.exception.missing.block.MissingBlockException;
 import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingSubjectException;
+import ar.com.nonosoft.jspec.exception.missing.context.SpringContextException;
 import ar.com.nonosoft.jspec.output.Report;
 
 import java.util.ArrayList;
@@ -25,7 +26,13 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	// --------------------------------------------------------------------------
 
 	public <T> T bean(String name) {
-		return (T) context().bean(name);
+		T bean = null;
+		try {
+			bean = context().bean(name);
+		} catch (Exception exception) {
+			throw new SpringContextException(exception);
+		}
+		return bean;
 	}
 
 	public void context(Class contextClass) {
