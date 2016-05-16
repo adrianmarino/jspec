@@ -25,22 +25,33 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	// Public Methods
 	// --------------------------------------------------------------------------
 
+	/**
+	 * Get a bean from a spring context configured using {@link #context(Class)} method.
+	 *
+	 * @param name
+	 * 			bean name.
+     * @return bean instance.
+     */
 	public <T> T bean(String name) {
-		T bean = null;
 		try {
-			bean = context().bean(name);
+			return context().bean(name);
 		} catch (Exception exception) {
 			throw new SpringContextException(exception);
 		}
-		return bean;
 	}
 
+	/**
+	 * Setup a Spring IOC context. Used to add a spring context to JSpec test context.
+	 *
+	 * @param contextClass
+	 * 			test context class.
+     */
 	public void context(Class contextClass) {
 		context = new SpringContext(contextClass);
 	}
 
 	/**
-	 * Subject is a let with "subject". it's commonly used to assign the object specified (to test).
+	 * Subject is a let with "subject". it's commonly used to assign the object specified (object to test).
 	 *
 	 * @param block
 	 *          return object to specify (to test).
@@ -53,7 +64,7 @@ public abstract class Container<COMPONENT, SUBJECT>  {
 	}
 
 	/**
-	 * Subject is a let with "subject". it's commonly used to assign the object specified (to test).
+	 * Subject is a let with "subject". it's commonly used to assign the object specified (object to test).
 	 *
 	 * @param subject
 	 *        object to specify (to test).

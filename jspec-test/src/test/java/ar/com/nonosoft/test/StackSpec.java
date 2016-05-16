@@ -38,7 +38,8 @@ public class StackSpec extends Spec<Stack> {{
 
 		d.describe("when use an spring context", ()-> {
 			d.context(SampleContext.class);
-			d.it("has a hello string", expect -> expect.that(d.bean("testString2"), is(equalTo("Hello"))));
+			d.it("has a hello string", expect ->
+				expect.that(d.bean("testString"), is(equalTo("Hello"))));
 		});
 	});
 }}
