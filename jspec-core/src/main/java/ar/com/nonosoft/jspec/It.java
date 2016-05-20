@@ -22,6 +22,7 @@ class It extends Statement {
 			report.incTestCounter();
 			block.eval(new Expect());
 			report.printSuccess(id, description);
+			parent.cleanLetCache();
 		} catch (AssertionError e) {
 			report.printFail(id, description, e);
 		} catch (Exception e) {
