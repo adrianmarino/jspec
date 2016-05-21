@@ -29,9 +29,14 @@ git clone https://github.com/adrianmarino/jspec.git
 gradle clean install -PexcludeTest
 ```
 
-**Step 3:** Run sample _StackSpec_ to check that all it working.
+**Step 3:** Add a jspec shortcut command.
 ```bash
-gradle -q jspec
+echo "alias jspec='gradle -q jspec'" >> ~/.bashrc
+```
+
+**Step 4:** Run sample _StackSpec_ to check that all it working.
+```bash
+jspec
 ```
 You should view the next output:
 
@@ -108,12 +113,12 @@ public class StackSpec extends Spec<Stack> {{
 
 **Step 3:** Run all specs.
 ```bash
-gradle -q jspec
+jspec
 ```
 
 Also could run specs in a particular package.
 ```bash
-gradle -q jspec -Ppkg=ar.com.nonosoft.test
+jspec -Ppkg=ar.com.nonosoft.test
 ```
 
 **Step 4:** Run from:
