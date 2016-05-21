@@ -21,12 +21,12 @@ class It extends Statement {
 		try {
 			report.incTestCounter();
 			block.eval(new Expect());
-			parent.resetLets();
 			report.printSuccess(id, description);
-		} catch (AssertionError cause) {
-			report.printFail(id, description, cause);
-		} catch (Exception exception) {
-			report.printError(id, description, exception);
+			parent.cleanLetCache();
+		} catch (AssertionError e) {
+			report.printFail(id, description, e);
+		} catch (Exception e) {
+			report.printError(id, description, e);
 		}
 	}
 

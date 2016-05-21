@@ -1,19 +1,17 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
-import ar.com.nonosoft.jspec.exception.impl.MultipleRootDescriptions;
+import ar.com.nonosoft.jspec.exception.JSpecException;
+import ar.com.nonosoft.jspec.exception.missing.block.impl.MultipleRootDescriptionsException;
 import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.util.ClassUtils;
 import org.junit.runner.RunWith;
-
 import java.util.List;
-
-import static ar.com.nonosoft.jspec.util.ClassUtils.subclassGenericParamOf;
 
 /**
  * The base class for all JSpec specifications.
  *
- * @param <SUBJECT>
- *          Generic type of class to test.
+ * @param <SUBJECT> Generic type of class to test.
  */
 @RunWith(JSpecRunner.class)
 @SuppressWarnings("unchecked")
@@ -23,7 +21,7 @@ public abstract class Spec<SUBJECT> {
 	 * Is the main block on a specification description. Use only on root description by spec.
 	 */
 	public void describe(ParentDescribeBlock<SUBJECT> block) {
-		if (description != null) throw new MultipleRootDescriptions(getClass());
+		if (description != null) throw new MultipleRootDescriptionsException(getClass());
 		description = newRootDescription(block);
 	}
 
@@ -41,11 +39,26 @@ public abstract class Spec<SUBJECT> {
 	}
 
 	// --------------------------------------------------------------------------
+	// Protected Methods
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Get class of object specified
+	 */
+	protected Class<SUBJECT> describedClass() {
+		try {
+			return (Class<SUBJECT>) ClassUtils.genericClassOfSubclass(getClass());
+		} catch (ClassNotFoundException e) {
+			throw new JSpecException("Error when resolve subject class!", e);
+		}
+	}
+
+	// --------------------------------------------------------------------------
 	// Private Methods
 	// --------------------------------------------------------------------------
 
 	private ParentDescribe<SUBJECT> newRootDescription(ParentDescribeBlock<SUBJECT> block) {
-		return new ParentDescribe<>(subclassGenericParamOf(getClass()).getTypeName(), block, report);
+		return new ParentDescribe<>(describedClass().getName(), block, report);
 	}
 
 	// --------------------------------------------------------------------------

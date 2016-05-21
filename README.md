@@ -1,6 +1,5 @@
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
 
-
 # JSpec
 
 An RSpec like micro framework for java language (**Still under construction!**).
@@ -63,7 +62,7 @@ buildscript {
 ```java
 public class StackSpec extends Spec<Stack> {{
 	describe(d -> {
-		d.let("one", 1).let("two", 2);
+		d.let("one", ()-> 1).let("two", ()-> 2);
 
 		d.describe(".new", ()-> {
 			d.context("when create an empty stack", c -> {
@@ -90,6 +89,12 @@ public class StackSpec extends Spec<Stack> {{
 					expect.that(c.subject().pop(), is(equalTo(c.get("two"))));
 				});
 			});
+		});
+
+		d.describe("when use an spring context", ()-> {
+			d.context(SampleContext.class);
+			d.it("has a hello string", expect ->
+				expect.that(d.bean("testString"), is(equalTo("Hello"))));
 		});
 	});
 }}

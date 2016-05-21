@@ -2,6 +2,5 @@ rootProject.name = 'jspec'
 
 include 'jspec-core', 'jspec-plugin'
 
-
 if (!hasProperty('excludeTest'))
 	include 'jspec-test'

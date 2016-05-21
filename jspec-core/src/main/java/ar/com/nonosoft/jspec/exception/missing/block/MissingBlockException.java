@@ -1,4 +1,6 @@
-package ar.com.nonosoft.jspec.exception;
+package ar.com.nonosoft.jspec.exception.missing.block;
+
+import ar.com.nonosoft.jspec.exception.JSpecException;
 
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
