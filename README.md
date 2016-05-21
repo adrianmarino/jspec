@@ -36,7 +36,7 @@ gradle -q jspec
 You should view the next output:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png" width="560">
+    <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png" width="560">
 </p>
 
 ### Use
@@ -63,7 +63,7 @@ buildscript {
 ```java
 public class StackSpec extends Spec<Stack> {{
 	describe(d -> {
-		d.let("one", ()-> 1).let("two", ()-> 2);
+		d.let("one", 1).let("two", 2);
 
 		d.describe(".new", ()-> {
 			d.context("when create an empty stack", c -> {
@@ -118,16 +118,14 @@ gradle -q jspec -Ppkg=ar.com.nonosoft.test
 
 **Step 4:** Run from:
 
-JIdea
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/idea.png">
+  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/idea.png"><br>
+  <b>Intellij Idea</b>
 </p>
 
-Eclipse
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/eclipse.png">
+  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/eclipse.png"><br>
+  <b>Eclipse</b>
 </p>
 
 ## Speficication Guide
