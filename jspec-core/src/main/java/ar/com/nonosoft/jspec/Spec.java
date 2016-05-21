@@ -4,6 +4,7 @@ import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
 import ar.com.nonosoft.jspec.exception.JSpecException;
 import ar.com.nonosoft.jspec.exception.missing.block.impl.MultipleRootDescriptionsException;
 import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.test.Test;
 import ar.com.nonosoft.jspec.util.ClassUtils;
 import org.junit.runner.RunWith;
 import java.util.List;
@@ -29,12 +30,12 @@ public abstract class Spec<SUBJECT> {
 	// Package Methods
 	// --------------------------------------------------------------------------
 
-	List<It> its() {
-		return description.its();
+	List<Test> tests() {
+		return description.tests();
 	}
 
 	void run(Report anOtherReport) {
-		its().forEach(It::run);
+		tests().forEach(Test::run);
 		anOtherReport.syncWith(report);
 	}
 

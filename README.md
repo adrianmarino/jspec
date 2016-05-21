@@ -96,6 +96,10 @@ public class StackSpec extends Spec<Stack> {{
 			d.it("has a hello string", expect ->
 				expect.that(d.bean("testString"), is(equalTo("Hello"))));
 		});
+		
+		d.it("is a pending It");
+		
+		d.xit("is a pending It", (expect) -> expect.that(true, is(false)));
 	});
 }}
 ```

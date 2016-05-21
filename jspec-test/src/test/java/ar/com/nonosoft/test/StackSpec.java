@@ -36,5 +36,9 @@ public class StackSpec extends Spec<Stack> {{
 			d.context(SampleContext.class);
 			d.it("has a hello string", expect -> expect.that(d.bean("testString"), is(equalTo("Hello"))));
 		});
+
+		d.it("is a pending it");
+
+		d.xit("is a pending xit", (expect) -> expect.that(true, is(false)));
 	});
 }}

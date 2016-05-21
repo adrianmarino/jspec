@@ -1,12 +1,17 @@
-package ar.com.nonosoft.jspec;
+package ar.com.nonosoft.jspec.test.impl;
 
+import ar.com.nonosoft.jspec.Container;
+import ar.com.nonosoft.jspec.Expect;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.test.Test;
 import org.junit.runners.model.Statement;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-class It extends Statement {
+import static java.lang.String.format;
+
+public class It extends Test {
 
 	// --------------------------------------------------------------------------
 	// Public Methods
@@ -19,7 +24,7 @@ class It extends Statement {
 
 	public void run() {
 		try {
-			report.incTestCounter();
+			report.incTests();
 			block.eval(new Expect());
 			report.printSuccess(id, description);
 			parent.cleanLetCache();
@@ -34,36 +39,26 @@ class It extends Statement {
 	// Package Methods
 	// --------------------------------------------------------------------------
 
-	String description() {
-		return description;
+	@Override
+	public String description() {
+		return format("It %s", description);
 	}
 
 	// --------------------------------------------------------------------------
 	// Attributes
 	// --------------------------------------------------------------------------
 
-	private String description;
-
 	private ItBlock block;
 
 	private Container parent;
-
-	private Report report;
-
-	private Long id;
-
-	private static AtomicLong counter = new AtomicLong(0);
 
 	// --------------------------------------------------------------------------
 	// Constructors
 	// --------------------------------------------------------------------------
 
 	public It(String description, ItBlock block, Container parent, Report report) {
-		this.description = description;
+		super(description, report);
 		this.parent = parent;
 		this.block = block;
-		this.report = report;
-		this.id = counter.incrementAndGet();
-		this.report.addItVar(id);
 	}
 }
