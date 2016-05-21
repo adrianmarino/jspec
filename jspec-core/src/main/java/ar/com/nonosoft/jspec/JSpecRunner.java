@@ -1,6 +1,7 @@
 package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.exception.JSpecException;
+import ar.com.nonosoft.jspec.test.Test;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
@@ -9,25 +10,25 @@ import org.junit.runners.model.InitializationError;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public class JSpecRunner extends ParentRunner<It> {
+public class JSpecRunner extends ParentRunner<Test> {
 
 	// --------------------------------------------------------------------------
 	// Protected Methods
 	// --------------------------------------------------------------------------
 
 	@Override
-	protected List<It> getChildren() {
-		return newInstanceOf(getSpecClass()).its();
+	protected List<Test> getChildren() {
+		return newInstanceOf(getSpecClass()).tests();
 	}
 
 	@Override
-	protected Description describeChild(It it) {
-		return Description.createTestDescription("It " + it.description(), "");
+	protected Description describeChild(Test test) {
+		return Description.createTestDescription(test.description(), "");
 	}
 
 	@Override
-	protected void runChild(It it, RunNotifier notifier) {
-		runLeaf(it, describeChild(it), notifier);
+	protected void runChild(Test test, RunNotifier notifier) {
+		runLeaf(test, describeChild(test), notifier);
 	}
 
 	// --------------------------------------------------------------------------

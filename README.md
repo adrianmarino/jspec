@@ -35,8 +35,9 @@ gradle -q jspec
 ```
 You should view the next output:
 
-![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png)
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/console.png" width="560">
+</p>
 
 ### Use
 
@@ -66,7 +67,7 @@ public class StackSpec extends Spec<Stack> {{
 
 		d.describe(".new", ()-> {
 			d.context("when create an empty stack", c -> {
-				c.subject(new Stack<Integer>());
+                c.subject(() -> new Stack<Integer>() {{ push(c.get("one")); }});
 				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
 			});
 		});
@@ -91,11 +92,16 @@ public class StackSpec extends Spec<Stack> {{
 			});
 		});
 
-		d.describe("when use an spring context", ()-> {
-			d.context(SampleContext.class);
-			d.it("has a hello string", expect ->
-				expect.that(d.bean("testString"), is(equalTo("Hello"))));
+		d.context("when use an spring context", (c)-> {
+			c.context(SampleContext.class);
+			c.it("has a hello string", expect -> {
+                expect.that(c.bean("testString"), is(equalTo("Hello")));
+            });
 		});
+		
+		d.it("is a pending It");
+		
+		d.xit("is a pending It", (expect) -> expect.that(true, is(false)));
 	});
 }}
 ```
@@ -114,12 +120,15 @@ gradle -q jspec -Ppkg=ar.com.nonosoft.test
 
 JIdea
 
-![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/idea.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/idea.png">
+</p>
 
 Eclipse
 
-![rspec output](https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/eclipse.png)
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adrianmarino/jspec/master/jspec-test/eclipse.png">
+</p>
 
 ## Speficication Guide
 
@@ -129,8 +138,6 @@ Eclipse
 ### TODO
 
 * Many tests.
-* Spring context integration.
 * Spec maven plugin.
-* xit.
 * let!
 * Unique IDE test description.

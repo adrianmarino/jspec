@@ -17,4 +17,6 @@ dependencies {
 	compile 'org.springframework:spring-context:4.2.5.RELEASE'
 	compile 'org.slf4j:jcl-over-slf4j:1.7.12'
 	compile 'ch.qos.logback:logback-classic:1.1.3'
+	compile 'org.atteo:evo-inflector:1.2'
+	compile 'com.google.guava:guava:19.0'
 }

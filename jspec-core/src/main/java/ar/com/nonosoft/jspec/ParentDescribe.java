@@ -2,6 +2,7 @@ package ar.com.nonosoft.jspec;
 
 import ar.com.nonosoft.jspec.block.ParentDescribeBlock;
 import ar.com.nonosoft.jspec.output.Report;
+import ar.com.nonosoft.jspec.test.Test;
 
 import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
@@ -12,7 +13,7 @@ public class ParentDescribe<SUBJECT> extends Describe<SUBJECT> {
 	// --------------------------------------------------------------------------
 
 	void run() {
-		its().forEach(It::run);
+		tests().forEach(Test::run);
 	}
 
 	// --------------------------------------------------------------------------

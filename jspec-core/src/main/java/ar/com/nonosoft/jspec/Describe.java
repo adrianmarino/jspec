@@ -9,8 +9,8 @@ public abstract class Describe<SUBJECT> extends Container<Describe<SUBJECT>, SUB
 	/**
 	 * Contexts are a powerful method to make your tests clear and well organized.
 	 * In the long term this practice will keep tests easy to read.
-	 * A context can contain an other context and its. When describing a context,
-	 * start its description with "when" or "with".
+	 * A context can contain an other context and tests. When describing a context,
+	 * start tests description with "when" or "with".
 	 *
 	 * @see <a href="http://betterspecs.org/#contexts">Use contexts</a>
 	 */

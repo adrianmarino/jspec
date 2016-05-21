@@ -10,14 +10,16 @@ import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingLetException;
 import ar.com.nonosoft.jspec.exception.missing.block.impl.MissingSubjectException;
 import ar.com.nonosoft.jspec.exception.missing.context.SpringContextException;
 import ar.com.nonosoft.jspec.output.Report;
-import ar.com.nonosoft.jspec.util.IterationUtils;
+import ar.com.nonosoft.jspec.test.impl.It;
+import ar.com.nonosoft.jspec.test.impl.Pending;
+import ar.com.nonosoft.jspec.test.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static ar.com.nonosoft.jspec.util.IterationUtils.lookUp;
-import static ar.com.nonosoft.jspec.util.IterationUtils.lookUpAndGet;
+import static ar.com.nonosoft.jspec.util.collection.CollectionUtils.lookUp;
+import static ar.com.nonosoft.jspec.util.collection.CollectionUtils.lookUpAndGet;
 import static org.fusesource.jansi.Ansi.Color.DEFAULT;
 
 @SuppressWarnings("unchecked")
@@ -142,11 +144,31 @@ public abstract class Container<COMPONENT, SUBJECT> {
      * @see <a href="http://betterspecs.org">Better Specs</a>
      */
     public void it(String desc, ItBlock block) {
-        its.add(new It(desc, block, this, report));
+        tests.add(new It(desc, block, this, report));
+    }
+
+    /**
+     * A pending It. Used to describe a test case before being written. Also used to disable its execution.
+     * See {@link #it(String, ItBlock) It} for more details.
+     */
+    public void it(String desc) {
+        tests.add(new Pending(desc, report));
+    }
+
+    /**
+     * A pending It. Used to describe a test case before being written. Also used to disable its execution.
+     * See {@link #it(String, ItBlock) It} for more details.
+     */
+    public void xit(String desc, ItBlock block) {
+        tests.add(new Pending(desc, report));
     }
 
     public String toString() {
         return description;
+    }
+
+    public void cleanLetCache() {
+        lookUp(this, (c) -> c.letBlockManager.clean(), (c) -> c.parent);
     }
 
     // --------------------------------------------------------------------------
@@ -159,20 +181,16 @@ public abstract class Container<COMPONENT, SUBJECT> {
         printFooter();
     }
 
-    List<It> its() {
-        return new ArrayList<It>() {{
-            addAll(its);
-            children.forEach(child -> addAll(child.its()));
+    List<Test> tests() {
+        return new ArrayList<Test>() {{
+            addAll(tests);
+            children.forEach(child -> addAll(child.tests()));
         }};
     }
 
     // --------------------------------------------------------------------------
     // Protected Methods
     // --------------------------------------------------------------------------
-
-    protected void cleanLetCache() {
-        lookUp(this, (c) -> c.letBlockManager.clean(), (c) -> c.parent);
-    }
 
     protected void printHeader() {
         report.printHeader(description, DEFAULT);
@@ -215,7 +233,7 @@ public abstract class Container<COMPONENT, SUBJECT> {
 
     protected final LetBlockManager letBlockManager;
 
-    private final List<It> its;
+    private final List<Test> tests;
 
     private SpringContext context;
 
@@ -228,7 +246,7 @@ public abstract class Container<COMPONENT, SUBJECT> {
     }
 
     Container(String description, Container parent, Report report) {
-        its = new ArrayList<>();
+        tests = new ArrayList<>();
         children = new ArrayList<>();
         letBlockManager = new LetBlockManager();
         this.description = description;

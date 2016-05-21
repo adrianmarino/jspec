@@ -11,7 +11,7 @@ public class StackSpec extends Spec<Stack> {{
 
 		d.describe(".new", ()-> {
 			d.context("when create an empty stack", c -> {
-				c.subject(new Stack<Integer>());
+                c.subject(() -> new Stack<Integer>() {{ push(c.get("one")); }});
 				c.it("is empty", expect -> expect.that(c.subject().isEmpty(), is(true)));
 			});
 		});
@@ -32,9 +32,15 @@ public class StackSpec extends Spec<Stack> {{
 			});
 		});
 
-		d.describe("when use an spring context", ()-> {
-			d.context(SampleContext.class);
-			d.it("has a hello string", expect -> expect.that(d.bean("testString"), is(equalTo("Hello"))));
+		d.context("when use an spring context", (c)-> {
+			c.context(SampleContext.class);
+			c.it("has a hello string", expect -> {
+                expect.that(c.bean("testString"), is(equalTo("Hello")));
+            });
 		});
+
+		d.it("is a pending it");
+
+		d.xit("is a pending xit", (expect) -> expect.that(true, is(false)));
 	});
 }}

@@ -3,6 +3,8 @@ package ar.com.nonosoft.jspec.output;
 import org.fusesource.jansi.Ansi.Color;
 
 import static ar.com.nonosoft.jspec.util.AssertionErrorUtils.errorLines;
+import static ar.com.nonosoft.jspec.util.collection.CollectionUtils.of;
+import static org.atteo.evo.inflector.English.plural;
 import static org.fusesource.jansi.Ansi.Color.YELLOW;
 
 public class Report {
@@ -15,8 +17,12 @@ public class Report {
         errors++;
     }
 
-    public void incTestCounter() {
+    public void incTests() {
         tests++;
+    }
+
+    public void incPendings() {
+        pendings++;
     }
 
     public void syncWith(Report report) {
@@ -24,14 +30,19 @@ public class Report {
         tests += report.tests;
         failures += report.failures;
         errors += report.errors;
+        pendings +=  report.pendings;
     }
 
     public String toString() {
         return output.nl().addln(footer()).toString();
     }
 
-    public void printSuccess(Long itId, String desc) {
-        output.var(itId, new Output().capGreen(desc).nl());
+    public void printSuccess(Long id, String desc) {
+        output.var(id, new Output().capGreen(desc).nl());
+    }
+
+    public void printPending(Long id, String desc) {
+        output.var(id, new Output().capBoldYellow("Pending:").ws().capYellow(desc).nl());
     }
 
     public void printFail(Long itId, String desc, Throwable cause) {
@@ -64,25 +75,28 @@ public class Report {
         output.endLevel();
     }
 
+    public void specsNotFound() {
+        output.boldln("Specs not found!", YELLOW);
+    }
+
     // --------------------------------------------------------------------------
     // Private Methods
     // --------------------------------------------------------------------------
 
     private String footer() {
-        return new Output().boldBlue(tests).ws().boldBlue(tests == 1 ? "test" : "tests").boldBlue(",").ws()
-                .boldBlue(failures).ws().boldBlue(failures == 1 ? "failure" : "failures").boldBlue(",").ws()
-                .boldBlue(errors).ws().boldBlue(errors == 1 ? "incErrors" : "errors").boldBlue(".").toString();
-    }
-
-    public void specsNotFound() {
-        output.boldln("Specs not found!", YELLOW);
+        return of("test", tests, "failure", failures, "error", errors, "pending", pendings)
+                .filter(c -> c.getKey().equals("test") ? true : c.getValue() > 0)
+                .map(c -> new Output().boldBlue(c.getValue()).ws().
+                        boldBlue(plural(c.getKey(), c.getValue().intValue())))
+                .reduce((o1, o2) -> o1.boldBlue(",").ws().add(o2))
+                .get().boldBlue(".").toString();
     }
 
     // --------------------------------------------------------------------------
     // Attributes
     // --------------------------------------------------------------------------
 
-    private long failures, errors, tests;
+    private long failures, errors, tests, pendings;
 
     private Output output;
 
@@ -91,7 +105,7 @@ public class Report {
     // --------------------------------------------------------------------------
 
     public Report() {
-        failures = errors = tests = 0;
+        failures = errors = tests = pendings = 0;
         output = new Output();
     }
 }

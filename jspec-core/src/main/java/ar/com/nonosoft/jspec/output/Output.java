@@ -24,6 +24,10 @@ public class Output {
 		return addln(boldWithFbColor(value.toString(), color));
 	}
 
+	public Output boldYellow(Object value) {
+		return add(boldWithFbColor(value.toString(), YELLOW));
+	}
+
 	public Output boldBlue(Object value) {
 		return add(boldWithFbColor(value.toString(), BLUE));
 	}
@@ -61,10 +65,21 @@ public class Output {
 		return green(capitalize(value.toString()));
 	}
 
+	public Output capYellow(Object value) {
+		return yellow(capitalize(value.toString()));
+	}
+
+	public Output capBoldYellow(Object value) {
+		return boldYellow(capitalize(value.toString()));
+	}
+
 	public Output green(Object value) {
 		return add(value, GREEN);
 	}
 
+	public Output yellow(Object value) {
+		return add(value, YELLOW);
+	}
 
 	public Output capRed(Object value) {
 		return red(capitalize(value.toString()));
@@ -82,7 +97,7 @@ public class Output {
 		output.append(addPrefix(value.toString()));
 		return this;
 	}
-	
+
 	public Output ws() {
 		return add(WHITESPACE);
 	}

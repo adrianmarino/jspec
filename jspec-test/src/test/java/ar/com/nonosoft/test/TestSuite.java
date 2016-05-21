@@ -40,8 +40,11 @@ public class TestSuite {
                 c.subject(() -> new Stack<Integer>() {{ push(c.get("one")); push(c.get("two")); }});
 
                 c.it("element is the last pushed", expect -> {
-                    expect.that(c.subject().pop(), is(equalTo(c.get("two"))));
                 });
+
+                c.it("is a pending It");
+
+                c.xit("is a pending It", (expect) -> expect.that(true, is(false)));
             });
         });
     }
