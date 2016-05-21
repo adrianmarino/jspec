@@ -48,7 +48,7 @@ public abstract class Container<COMPONENT, SUBJECT> {
      *
      * @param contextClass test context class.
      */
-    public void context(Class contextClass) {
+    public void springContext(Class contextClass) {
         context = new SpringContext(contextClass);
     }
 
