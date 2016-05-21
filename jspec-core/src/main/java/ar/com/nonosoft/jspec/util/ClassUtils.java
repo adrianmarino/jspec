@@ -5,13 +5,21 @@ import java.lang.reflect.Type;
 
 public class ClassUtils {
 
-	public static Type subclassGenericParamOf(Class clazz) {
-		return subclassGenericParamOf(clazz, 0);
+	public static Class genericClassOfSubclass(Class clazz) throws ClassNotFoundException {
+		return genericClassOfSubclass(clazz, 0);
 	}
 
-	public static Type subclassGenericParamOf(Class clazz, Integer number) {
-		Type specSubclass = clazz.getGenericSuperclass();
-		return ((ParameterizedType) specSubclass).getActualTypeArguments()[number];
+	public static Class genericClassOfSubclass(Class clazz, Integer number) throws ClassNotFoundException {
+		return Class.forName(genericOfSubclass(clazz, number).getTypeName());
+	}
+
+	public static Type genericOfSubclass(Class clazz) {
+		return genericOfSubclass(clazz, 0);
+	}
+
+	public static Type genericOfSubclass(Class clazz, Integer number) {
+		ParameterizedType type = ((ParameterizedType) clazz.getGenericSuperclass());
+		return type.getActualTypeArguments()[number];
 	}
 
 	private ClassUtils() {}
