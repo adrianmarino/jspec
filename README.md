@@ -8,7 +8,7 @@ An RSpec like micro framework for java language (**Still under construction!**).
 
 * Describe your tests as RSpec way.
 * Run a JSpec specification as a JUnit test from your favorite IDE (Idea/Eclipse).
-* Run tests with gradle as "rspec --format=doc" way.
+* Run tests with gradle as ``` rspec --format=doc ``` way.
 * Use hamcrest assetions.
 
 ### Modules
