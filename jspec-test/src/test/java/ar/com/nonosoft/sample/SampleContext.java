@@ -1,4 +1,4 @@
-package ar.com.nonosoft.test;
+package ar.com.nonosoft.sample;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

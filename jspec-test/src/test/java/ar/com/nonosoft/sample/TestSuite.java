@@ -1,4 +1,4 @@
-package ar.com.nonosoft.test;
+package ar.com.nonosoft.sample;
 
 import ar.com.nonosoft.jspec.SpecSuite;
 
@@ -49,5 +49,5 @@ public class TestSuite {
         });
     }
 
-    public static final String PACKAGE = "com.nonosoft.test";
+    public static final String PACKAGE = "com.nonosoft.sample";
 }

@@ -46,9 +46,9 @@ public abstract class Spec<SUBJECT> {
 	/**
 	 * Get class of object specified
 	 */
-	protected Class<SUBJECT> describedClass() {
+	protected String describedClassName() {
 		try {
-			return (Class<SUBJECT>) ClassUtils.genericClassOfSubclass(getClass());
+			return ClassUtils.nameOfSubclass(getClass());
 		} catch (ClassNotFoundException e) {
 			throw new JSpecException("Error when resolve subject class!", e);
 		}
@@ -59,7 +59,7 @@ public abstract class Spec<SUBJECT> {
 	// --------------------------------------------------------------------------
 
 	private ParentDescribe<SUBJECT> newRootDescription(ParentDescribeBlock<SUBJECT> block) {
-		return new ParentDescribe<>(describedClass().getName(), block, report);
+		return new ParentDescribe<>(describedClassName(), block, report);
 	}
 
 	// --------------------------------------------------------------------------

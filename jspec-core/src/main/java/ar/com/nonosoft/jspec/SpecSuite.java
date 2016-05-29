@@ -34,6 +34,11 @@ public class SpecSuite {
 		return this;
 	}
 
+	public <SUBJECT> SpecSuite describe(String description, ParentDescribeBlock<SUBJECT> block) {
+		descriptions.add(new ParentDescribe<>(description, block, report));
+		return this;
+	}
+
 	public String run() {
 		if(!haveSpecs())
 			report.specsNotFound();

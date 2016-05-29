@@ -5,9 +5,6 @@ import ar.com.nonosoft.jspec.Expect;
 import ar.com.nonosoft.jspec.block.ItBlock;
 import ar.com.nonosoft.jspec.output.Report;
 import ar.com.nonosoft.jspec.test.Test;
-import org.junit.runners.model.Statement;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 import static java.lang.String.format;
 
@@ -19,7 +16,11 @@ public class It extends Test {
 
 	@Override
 	public void evaluate() throws Throwable {
-		block.eval(new Expect());
+        try {
+            block.eval(new Expect());
+        } finally {
+            parent.cleanLetCache();
+        }
 	}
 
 	public void run() {
@@ -27,11 +28,12 @@ public class It extends Test {
 			report.incTests();
 			block.eval(new Expect());
 			report.printSuccess(id, description);
-			parent.cleanLetCache();
 		} catch (AssertionError e) {
 			report.printFail(id, description, e);
 		} catch (Exception e) {
 			report.printError(id, description, e);
+		} finally {
+			parent.cleanLetCache();
 		}
 	}
 
