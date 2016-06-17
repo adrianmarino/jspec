@@ -133,7 +133,7 @@ jspec -Ppkg=ar.com.nonosoft.test
   <b>Eclipse</b>
 </p>
 
-## Speficication Guide
+## Specification Guide
 
  _Coming soon!_ (<a href="http://betterspecs.org">Better Specs documentation</a>).
 
