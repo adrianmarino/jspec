@@ -2,7 +2,7 @@
 
 # JSpec
 
-An RSpec like micro framework for java language (**Still under construction!**).
+An RSpec like micro framework for java (**Still under construction!**).
 
 ### Features
 
